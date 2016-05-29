@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+			http://www.springframework.org/schema/mvc 
+			http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-4.0.xsd ">
+	<!-- 1.扫描service,dao -->
+	<context:component-scan base-package="com.activiti.service,com.activiti.dao"/>
+	<!-- 2.加载配置数据库文件 -->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+		
+	<!-- 3.数据源dataSource-->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClassName}"/>
+		<property name="jdbcUrl" value="${jdbc.url}"/>
+		<property name="user" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+
+		<property name="maxPoolSize" value="${c3p0.pool.maxPoolSize}"/>
+		<property name="minPoolSize" value="${c3p0.pool.minPoolSize}" />
+		<property name="initialPoolSize" value="${c3p0.pool.initialPoolSize}"/>
+		<property name="acquireIncrement" value="${c3p0.pool.acquireIncrement}"/>
+		<property name="testConnectionOnCheckin" value="false"/>
+	    <property name="testConnectionOnCheckout" value="true"/>
+	    <property name="preferredTestQuery" value="SELECT 1"/>
+	</bean>	
+	
+	<!-- 4.spring mybatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+		<!-- 扫描mapper -->
+		<property name="mapperLocations" value="classpath:com/activiti/mapper/manager/*.xml" />  
+	</bean>
+	 
+	<!-- 5.事务 -->	
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="find*" read-only="true"  />
+			<tx:method name="get*" read-only="true"  />
+			<tx:method name="view*" read-only="true"  />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<!-- -->
+		<aop:pointcut expression="execution(* com.activiti.service.*Service.*(..))" id="transactionPointCut"/>
+		<!--  -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointCut"/>
+	</aop:config>
+	
+	<!-- 导入activiti配置文件 -->
+	<import resource="classpath:activiti.cfg.xml"/>
+	
+</beans>

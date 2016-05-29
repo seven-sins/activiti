@@ -1,0 +1,82 @@
+/*css reset*/
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td , i{
+	margin:0;
+	padding:0;
+	border:0;
+	font-weight:inherit;
+	font-style:inherit;
+	font-size:100%;
+	font-family:inherit;
+	vertical-align:baseline;
+}
+body {line-height:1.5;}
+table {border-collapse: collapse;border-spacing:0;}
+caption, th, td ,b,strong{text-align:left;font-weight:normal;}
+table, td, th {vertical-align:middle;}	
+blockquote:before, blockquote:after, q:before, q:after {content:"";}
+blockquote, q {quotes:"" "";}
+a img {border:none;}
+em,cite{font-style:normal;}
+
+
+body { background:#fff; font: 12px/1.5 Tahoma,'宋体';color:#000;}
+h1, h2, h3, h4, h5, h6 {font-weight:normal;color:#111;}
+a {text-decoration:none;cursor:pointer;}
+dl, dt, dd, ol, ul, li{ list-style:none;}
+
+/*some common class*/
+.left{float:left;}
+.right{float:right;}
+
+/*clear*/
+.ue-clear:after{content: "";display:block;height:0;clear:both;visibility:hidden;}
+.ue-clear{display:inline-block;}
+*html .ue-clear{height:1%;}
+.ue-clear{display:block; overflow:hidden;}
+
+.placeholder{color:#ddd;}
+
+.select-wrap ul{ display:none; background:#fff;position:absolute; left:0; top:30px;  width:260px; border:1px solid #c5d6e0;border-top:none;z-index: 222;}
+.select-wrap ul li{ padding-left:10px; line-height:28px; cursor:pointer;}
+.select-wrap ul li:hover{ background:url(../images/formbtnbg.png) repeat-x;}
+
+/*m*/
+.hide{display:none;}
+.hold{visibility:hidden;}
+.red{color:#f4575a;}
+.green{color:#2d8033;}
+.blue{color:#0076ff;}
+.gray{color:#bbb;}
+.light-gray{color:#f8f8f8;}
+.light-gray-bg{background:#f8f8f8;}
+
+.space{padding:0 8px;}
+
+
+/********paging start********/
+.t-pages{height:52px;line-height:52px;position:relative;}
+
+/*t-pages-left*/
+.t-pages-left{position:absolute;left:0;}
+.t-pages-left-current{margin-right:10px;}
+.t-pages-left-current span{padding:0 3px;color:#666;font-size:12px;}
+.t-pages-left-current .current-number{color:#d00;font-size:12px;}
+.t-pages-each{margin-right:10px;color:#666;font-size:12px;}
+.t-pages-each i{padding:0 3px;color:#d00;font-style:normal;font-size:12px;}
+.t-pages-totalcount{color:#666;font-size:12px;}
+.t-pages-totalcount i{padding:0 3px;color:#d00;font-style:normal;font-size:12px;}
+
+/*t-pages-right*/
+.t-pages-right{position:absolute;right:0;}
+.t-pages-right a,.t-pages-right span{color:#666;text-decoration:none;font-size:12px;padding:5px 11px;border:1px solid #ececec;margin:0 1px;
+}
+.t-pages-right a:hover,.t-pages-right span:hover{border:1px solid #4596f2;color:#4596f2;}
+.t-pages-disable{color:#ccc !important;}
+.t-pages-disable:hover{color:#ccc !important;border:1px solid #ececec !important;}
+.t-pages-selected{background:#4596f2;border:1px solid #4596f2 !important;color:#fff !important;}
+/*goto...*/
+.t-pages-goto{margin-left:10px !important;border:none !important;}
+.t-pages-goto:hover{color:#666 !important;}
+.t-pages-number{padding:0 5px;width:58px;height:26px;border:1px solid #ececec;}
+/********paging end********/
+

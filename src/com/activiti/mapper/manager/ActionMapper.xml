@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.activiti.mapper.manager.ActionMapper" >
+	<resultMap type="com.activiti.po.Action" id="actionRM">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="url" column="url" />
+		<result property="request" column="request" />
+		<result property="parentId" column="parentId" />
+		<result property="position" column="position" />
+	</resultMap>
+	
+	<select id="find" parameterType="map" resultMap="actionRM">
+		select * from action
+		where 1=1 
+		<if test="parentId != null">and parentId = #{parentId}</if>
+		order by position asc
+	</select>
+	
+		
+	<select id="findByRoldId" parameterType="map" resultMap="actionRM">
+		SELECT DISTINCT a.id, a.url, a.request FROM privilege p 
+		INNER JOIN ACTION a 
+		ON p.actionId=a.id 
+		WHERE 1 = 1
+		<if test="roleId != null">and p.roleId = #{roleId}</if>
+		AND a.url IS NOT NULL
+	</select>
+	
+	<select id="get" parameterType="int" resultMap="actionRM">
+		select * from action
+		where id = #{id}
+	</select>
+	
+	<insert id="insert" parameterType="com.activiti.po.Action" >
+		insert into action
+			(	
+				id,name,url,request,position,parentId
+			)
+		values
+			(	
+				#{id},
+			 	#{name},
+			 	#{url},
+			 	#{request},
+			 	#{position},
+			 	#{parentId}
+	 	     )
+	</insert>
+	<update id="update" parameterType="com.activiti.po.Action" >
+		update action
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="url != null">
+				url = #{url},
+			</if>
+			<if test="request != null">
+				request = #{request},
+			</if>
+			<if test="position != null">
+				position = #{position},
+			</if>
+			<if test="parentId != null">
+				parentId = #{parentId}
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="int">
+		delete from action
+		where id = #{id}
+	</delete>
+
+	<delete id="delete" parameterType="int">
+		delete from action
+		where id in
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+</mapper>

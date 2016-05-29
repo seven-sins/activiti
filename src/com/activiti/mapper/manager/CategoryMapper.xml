@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.activiti.mapper.manager.CategoryMapper" >
+	<resultMap type="com.activiti.po.Category" id="categoryRM">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="position" column="position" />
+	</resultMap>
+
+	<select id="find" parameterType="map" resultMap="categoryRM">
+		select id, name, description, position from category 
+		where 1=1
+		<if test="name != null">
+			and name=#{name}
+		</if>
+		order by position asc
+	</select>
+	
+	<select id="get" parameterType="int" resultMap="categoryRM">
+		select id, name, description, position from category 
+		where id = #{id}
+	</select>
+	
+	<insert id="insert" parameterType="com.activiti.po.Category" >
+		insert into category
+			( name, description, position )
+		values
+			( #{name}, #{description}, #{position} )
+	</insert>
+	
+	<update id="update" parameterType="com.activiti.po.Category" >
+		update category
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="position != null">
+				position = #{position}
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="int">
+		delete from category
+		where id = #{id}
+	</delete>
+    
+	<delete id="delete" parameterType="int">
+		delete from category
+		where id in
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+</mapper>

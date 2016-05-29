@@ -42,7 +42,13 @@
                             <li><a href="${ctx }/privilege" target="iframe">权限设置</a></li>
                         </ul>
                     </li>
-                    <li class="item gongwen"><div class="nav-header"><a href="javascript:;" class="ue-clear"><span>工作流</span><i class="icon"></i></a></div></li>
+                    <li class="item gongwen">
+                    	<div class="nav-header"><a href="javascript:;" class="ue-clear"><span>工作流</span><i class="icon"></i></a></div>
+                   		<ul class="subnav">
+                   			<li><a href="${ctx }/workFlow/deploy" target="iframe">部署流程</a></li>
+                        	<li><a href="${ctx }/workFlow/deployment" target="iframe">部署信息</a></li>
+                        </ul>
+                   	</li>
                     <li class="item system"><div class="nav-header"><a href="javascript:;" class="ue-clear"><span>系统管理</span><i class="icon"></i></a></div></li>
                 </ul>
             </div>
@@ -54,10 +60,8 @@
     <div id="ft" class="ue-clear">
     	<div class="ft-left">
             <span>管理系统</span>
-            <em>Office&nbsp;System</em>
         </div>
         <div class="ft-right">
-            <span>Automation</span>
             <em>V1.0&nbsp;2016</em>
         </div>
     </div>

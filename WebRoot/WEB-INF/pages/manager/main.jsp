@@ -42,10 +42,7 @@
                             <li><a href="${ctx }/privilege" target="iframe">权限设置</a></li>
                         </ul>
                     </li>
-                    <li class="item gongwen"><div class="nav-header"><a href="javascript:;" class="ue-clear"><span>公文起草</span><i class="icon"></i></a></div></li>
-                    <li class="item konwledge"><div class="nav-header"><a href="javascript:;" class="ue-clear"><span>知识管理</span><i class="icon"></i></a></div></li>
-                    <li class="item agency"><div class="nav-header"><a href="javascript:;" class="ue-clear"><span>组织结构</span><i class="icon"></i></a></div></li>
-                    <li class="item email"><div class="nav-header"><a href="javascript:;" class="ue-clear"><span>邮件管理</span><i class="icon"></i></a></div></li>
+                    <li class="item gongwen"><div class="nav-header"><a href="javascript:;" class="ue-clear"><span>工作流</span><i class="icon"></i></a></div></li>
                     <li class="item system"><div class="nav-header"><a href="javascript:;" class="ue-clear"><span>系统管理</span><i class="icon"></i></a></div></li>
                 </ul>
             </div>

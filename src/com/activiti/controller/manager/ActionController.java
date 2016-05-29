@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.activiti.controller.base.BaseController;
 import com.activiti.po.Action;
-import com.activiti.service.ActionService;
+import com.activiti.service.manager.ActionService;
 
 @SuppressWarnings("all")
 @Controller

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.activiti.controller.base.BaseController;
 import com.activiti.po.Role;
-import com.activiti.service.RoleService;
+import com.activiti.service.manager.RoleService;
 import com.activiti.util.Page;
 import com.github.pagehelper.PageInfo;
 

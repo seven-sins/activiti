@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.activiti.controller.base.BaseController;
 import com.activiti.po.Category;
-import com.activiti.service.CategoryService;
+import com.activiti.service.manager.CategoryService;
 import com.activiti.util.Page;
 import com.github.pagehelper.PageInfo;
 

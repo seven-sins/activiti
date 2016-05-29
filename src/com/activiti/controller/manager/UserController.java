@@ -19,9 +19,9 @@ import com.activiti.controller.base.BaseController;
 import com.activiti.po.Action;
 import com.activiti.po.Role;
 import com.activiti.po.User;
-import com.activiti.service.ActionService;
-import com.activiti.service.RoleService;
-import com.activiti.service.UserService;
+import com.activiti.service.manager.ActionService;
+import com.activiti.service.manager.RoleService;
+import com.activiti.service.manager.UserService;
 import com.activiti.util.Page;
 import com.github.pagehelper.PageInfo;
 

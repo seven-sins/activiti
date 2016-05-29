@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.activiti.controller.base.BaseController;
 import com.activiti.po.Action;
 import com.activiti.po.Role;
-import com.activiti.service.ActionService;
-import com.activiti.service.PrivilegeService;
-import com.activiti.service.RoleService;
+import com.activiti.service.manager.ActionService;
+import com.activiti.service.manager.PrivilegeService;
+import com.activiti.service.manager.RoleService;
 
 @SuppressWarnings("all")
 @Controller

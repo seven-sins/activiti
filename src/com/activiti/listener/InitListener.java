@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.activiti.po.Action;
-import com.activiti.service.ActionService;
+import com.activiti.service.manager.ActionService;
 
 @SuppressWarnings("all")
 public class InitListener implements ServletContextListener {

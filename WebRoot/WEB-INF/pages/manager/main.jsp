@@ -32,7 +32,7 @@
         	<div class="sidebar">
             	<h2 class="sidebar-header"><p>功能导航</p></h2>
                 <ul class="nav">
-                	<li class="item office current"><div class="nav-header"><a href="javascript:;" date-src="home.html" class="ue-clear"><span>工作台</span><i class="icon"></i></a></div></li>
+                	<li class="item office current"><div class="nav-header"><a href="${ctx }/workBench" class="ue-clear" target="iframe"><span>工作台</span><i class="icon"></i></a></div></li>
                     <li class="item nav-info">
                     	<div class="nav-header"><a href="javascript:;" class="ue-clear"><span>基础设置</span><i class="icon"></i></a></div>
                         <ul class="subnav">
@@ -50,7 +50,7 @@
                 </ul>
             </div>
             <div class="content">
-            	<iframe src="${ctx }/user" id="iframe" name="iframe" width="100%" height="100%" frameborder="0"></iframe>
+            	<iframe src="${ctx }/workBench" id="iframe" name="iframe" width="100%" height="100%" frameborder="0"></iframe>
             </div>
         </div>
     </div>

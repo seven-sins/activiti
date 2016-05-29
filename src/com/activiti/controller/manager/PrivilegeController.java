@@ -18,8 +18,6 @@ import com.activiti.po.Role;
 import com.activiti.service.ActionService;
 import com.activiti.service.PrivilegeService;
 import com.activiti.service.RoleService;
-import com.activiti.util.Page;
-import com.github.pagehelper.PageInfo;
 
 @SuppressWarnings("all")
 @Controller
@@ -44,10 +42,11 @@ public class PrivilegeController extends BaseController {
 	public String index(Model model, Integer pageIndex, Integer pageSize) {
 		Map map = super.initPagination(pageIndex, pageSize);
 		List<Action> dataList = actionService.find(map);
-		PageInfo pageInfo = new PageInfo(dataList);
-		Page page = new Page(pageInfo.getPageNum(), pageInfo.getPageSize(),
-				dataList, (int) pageInfo.getTotal());
 		model.addAttribute("dataList", dataList);
+
+		// PageInfo pageInfo = new PageInfo(dataList);
+		// Page page = new Page(pageInfo.getPageNum(), pageInfo.getPageSize(),
+		// dataList, (int) pageInfo.getTotal());
 
 		List<Role> roleList = roleService.find(null);
 		model.addAttribute("roleList", roleList);

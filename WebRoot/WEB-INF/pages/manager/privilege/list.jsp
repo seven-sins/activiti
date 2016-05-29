@@ -13,7 +13,7 @@
 <div class="query">
 	<div class="query-conditions ue-clear">
 	    <div class="conditions name ue-clear">
-	        <label>流程名称：</label>
+	        <label>角色：</label>
 	        <div class="select-wrap">
 	            <div class="select-title ue-clear"><span id="roleId" _id="0">请选择</span><i class="icon"></i></div>
 	            <ul class="select-list">
@@ -27,9 +27,6 @@
     <div class="query-btn ue-clear">
     	<a onclick="updatePrivilege()" class="confirm">保存</a>
     </div>
-</div>
-<div class="table-operate ue-clear">
-	<a href="${ctx }/action/toAdd" class="add">添加</a>
 </div>
 <div class="table-box">
 	<table>
@@ -55,9 +52,9 @@
 		                <td>${o.request }</td>
 		                <td>${o.position }</td>
 		                <td class="operate">
-		                	<a href="${ctx }/action/toAdd?parentId=${o.id}">添加</a>
-		                	<a href="${ctx }/action/toUpdate?id=${o.id}">修改</a>
-		                	<a url="${ctx }/action/${o.id}" onclick="deleteObj(this)">删除</a>
+<!-- 		                	<a href="${ctx }/action/toAdd?parentId=${o.id}">添加</a> -->
+<!-- 		                	<a href="${ctx }/action/toUpdate?id=${o.id}">修改</a> -->
+<!-- 		                	<a url="${ctx }/action/${o.id}" onclick="deleteObj(this)">删除</a> -->
 		                </td>
 		            </tr>
 		            <!-- 子类 -->
@@ -71,9 +68,9 @@
 				                <td>${sub.request }</td>
 				                <td>${sub.position }</td>
 				                <td class="operate">
-				                	<a href="${ctx }/action/toAdd?parentId=${sub.id}" class="hold">添加</a>
-				                	<a href="${ctx }/action/toUpdate?id=${sub.id}">修改</a>
-				                	<a url="${ctx }/action/${sub.id}" onclick="deleteObj(this)">删除</a>
+<!-- 				                	<a href="${ctx }/action/toAdd?parentId=${sub.id}" class="hold">添加</a> -->
+<!-- 				                	<a href="${ctx }/action/toUpdate?id=${sub.id}">修改</a> -->
+<!-- 				                	<a url="${ctx }/action/${sub.id}" onclick="deleteObj(this)">删除</a> -->
 				                </td>
 				            </tr>
 		            	</t:if>

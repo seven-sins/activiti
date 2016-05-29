@@ -33,10 +33,11 @@ public class ActionController extends BaseController {
 	public String index(Model model, Integer pageIndex, Integer pageSize) {
 		Map map = super.initPagination(pageIndex, pageSize);
 		List<Action> dataList = actionService.find(map);
+		model.addAttribute("dataList", dataList);
+
 		// PageInfo pageInfo = new PageInfo(dataList);
 		// Page page = new Page(pageInfo.getPageNum(), pageInfo.getPageSize(),
 		// dataList, (int) pageInfo.getTotal());
-		model.addAttribute("dataList", dataList);
 
 		return "/manager/action/list.jsp";
 	}

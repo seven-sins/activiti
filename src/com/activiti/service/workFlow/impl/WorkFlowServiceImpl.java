@@ -1,4 +1,4 @@
-package com.activiti.service.workFlow.impl;
+package com.activiti.service.workflow.impl;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -24,13 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.activiti.po.User;
-import com.activiti.po.workFlow.Coord;
-import com.activiti.po.workFlow.WorkFlow;
-import com.activiti.service.workFlow.WorkFlowService;
+import com.activiti.po.workflow.Coord;
+import com.activiti.po.workflow.Workflow;
+import com.activiti.service.workflow.WorkflowService;
 
 @SuppressWarnings("all")
 @Service
-public class WorkFlowServiceImpl implements WorkFlowService {
+public class WorkflowServiceImpl implements WorkflowService {
 
 	@Autowired
 	ProcessEngine processEngine;
@@ -153,7 +153,7 @@ public class WorkFlowServiceImpl implements WorkFlowService {
 		return list;
 	}
 
-	public Object completeTask(WorkFlow workFlow, User user) {
+	public Object completeTask(Workflow workFlow, User user) {
 		// 获取任务ID
 		String taskId = workFlow.getTaskId();
 		// 获取连线的名称

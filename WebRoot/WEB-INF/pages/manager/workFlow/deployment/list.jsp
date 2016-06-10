@@ -39,8 +39,8 @@
 	                <td>${o.name }</td>
 	                <td><t:date date="${o.deploymentTime }" format="yyyy-MM-dd HH:mm"></t:date></td>
 	                <td class="operate">
-	                	<a url="${ctx }/workFlow/deployment/${o.id}"  onclick="deleteObj(this)">删除</a>
-	                	<a href="${ctx }/workFlow/processDefinition/${o.id}" >流程定义信息</a>
+	                	<a url="${ctx }/workflow/deployment/${o.id}"  onclick="deleteObj(this)">删除</a>
+	                	<a href="${ctx }/workflow/processDefinition/${o.id}" >流程定义信息</a>
 	                </td>
 	            </tr>
         	</t:forEach>

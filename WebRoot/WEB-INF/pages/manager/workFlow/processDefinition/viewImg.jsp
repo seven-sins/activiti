@@ -16,7 +16,7 @@
 </div>
 <div class="main">
 	<div class="container" style="position:relative;">
-		<img src="${ctx }/workFlow/processDefinition/showImg?deploymentId=${workFlow.deploymentId}&diagramResourceName=${workFlow.diagramResourceName}"  />
+		<img src="${ctx }/workflow/processDefinition/showImg?deploymentId=${workflow.deploymentId}&diagramResourceName=${workflow.diagramResourceName}"  />
 		<t:if test="${coord != null }">
 			<div style="position:absolute;left:${coord.x + 10}px;top:${coord.y + 10}px;width:${coord.width}px;height:${coord.height}px;border:1px solid red;"></div>	
 		</t:if>

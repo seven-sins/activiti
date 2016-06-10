@@ -47,7 +47,7 @@
 	                <td>${o.diagramResourceName }</td>
 	                <td>${o.deploymentId }</td>
 	                <td class="operate">
-	                	<a href="${ctx }/workFlow/processDefinition/viewImg?deploymentId=${o.deploymentId}&diagramResourceName=${o.diagramResourceName}" target="_blank">查看流程图</a>
+	                	<a href="${ctx }/workflow/processDefinition/viewImg?deploymentId=${o.deploymentId}&diagramResourceName=${o.diagramResourceName}" target="_blank">查看流程图</a>
 	                </td>
 	            </tr>
         	</t:forEach>

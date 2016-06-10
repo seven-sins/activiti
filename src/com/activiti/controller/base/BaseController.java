@@ -12,6 +12,12 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
+/**
+ * 
+ * @author seven sins
+ * 
+ * @CreateDate Jun 10, 2016 2:35:35 PM
+ */
 @SuppressWarnings("all")
 public abstract class BaseController {
 
@@ -77,6 +83,12 @@ public abstract class BaseController {
 		return map;
 	}
 
+	/**
+	 * 
+	 * @author seven sins
+	 * 
+	 * @CreateDate Jun 10, 2016 2:37:40 PM
+	 */
 	protected class Query {
 		private Map<String, Object> map;
 

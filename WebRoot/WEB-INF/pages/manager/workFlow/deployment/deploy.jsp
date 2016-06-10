@@ -15,7 +15,7 @@
 	</h2>
 </div>
 <div class="main">
-<form id="form1" action="${ctx }/workFlow/deployment" autocomplete="off" method="POST" enctype="multipart/form-data" >
+<form id="form1" action="${ctx }/workflow/deployment" autocomplete="off" method="POST" enctype="multipart/form-data" >
 	<p class="short-input ue-clear">
     	<label>流程名称：</label>
         <input type="text" name="processName" placeholder="上传流程定义"  />
@@ -33,7 +33,7 @@
 
 <div class="btn ue-clear">
 	<a class="confirm" onclick="save()" >确定</a>
-    <a href="${ctx }/workFlow/deployment" class="clear">返回</a>
+    <a href="${ctx }/workflow/deployment" class="clear">返回</a>
 </div>
 </body>
 <t:if test="${status != null && status == 'success' }">

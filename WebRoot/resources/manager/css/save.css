@@ -17,7 +17,7 @@ body{ font-family:'微软雅黑';}
 .main .select{ overflow:visible; margin-top:10px; padding-left:31px; line-height:30px;}
 .main .select label{float:left; width:82px; text-align:left;}
 .main .select .select-wrap{ float:left; position:relative;}
-.main .select .select-wrap .select-title{width:240px; height:28px; padding:0 10px; border:1px solid #c5d6e0; outline:none; background:url(../images/inputbg.png) repeat-x; cursor:pointer;}
+.main .select .select-wrap .select-title{width:218px; height:28px; padding:0 10px; border:1px solid #c5d6e0; outline:none; background:url(../images/inputbg.png) repeat-x; cursor:pointer;}
 .main .select .select-wrap .select-title span{ float:left;}
 .main .select .select-wrap .select-title .icon{ float:right; margin-right:3px; width:9px; height:28px; background:url(../images/selectxl.png) no-repeat center center;} 
 

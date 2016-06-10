@@ -1,8 +1,8 @@
-package com.activiti.po.workFlow;
+package com.activiti.po.workflow;
 
 import java.io.File;
 
-public class WorkFlow {
+public class Workflow {
 	private File processFile; // 流程定义部署文件
 	private String processName;// 流程定义名称
 	private Integer id;// 申请单ID

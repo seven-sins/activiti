@@ -1,4 +1,4 @@
-package com.activiti.po.workFlow;
+package com.activiti.po.workflow;
 
 public class Coord {
 	private Integer x;

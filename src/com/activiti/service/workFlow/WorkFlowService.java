@@ -1,4 +1,4 @@
-package com.activiti.service.workFlow;
+package com.activiti.service.workflow;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -11,11 +11,11 @@ import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 
 import com.activiti.po.User;
-import com.activiti.po.workFlow.Coord;
-import com.activiti.po.workFlow.WorkFlow;
+import com.activiti.po.workflow.Coord;
+import com.activiti.po.workflow.Workflow;
 
 @SuppressWarnings("all")
-public interface WorkFlowService {
+public interface WorkflowService {
 
 	/**
 	 * 部署流程
@@ -96,7 +96,7 @@ public interface WorkFlowService {
 	/**
 	 * 指定连线名称完成任务
 	 */
-	public Object completeTask(WorkFlow workFlow, User user);
+	public Object completeTask(Workflow workFlow, User user);
 
 	/**
 	 * 根据任务Id查询批注信息

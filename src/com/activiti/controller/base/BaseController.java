@@ -76,4 +76,23 @@ public abstract class BaseController {
 
 		return map;
 	}
+
+	protected class Query {
+		private Map<String, Object> map;
+
+		public Query() {
+			this.map = new HashMap<String, Object>();
+		}
+
+		public Query put(String key, Object value) {
+			this.map.put(key, value);
+
+			return this;
+		}
+
+		public Map<String, Object> getMap() {
+			return map;
+		}
+
+	}
 }

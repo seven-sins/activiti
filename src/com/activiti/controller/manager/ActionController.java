@@ -97,9 +97,8 @@ public class ActionController extends BaseController {
 		if (parentId == null)
 			parentId = 0;
 
-		Map<String, Object> map = new HashMap();
-		map.put("parentId", 0);
-		List<Action> actionList = actionService.find(map);
+		List<Action> actionList = actionService.find(query.put("parentId", 0)
+				.getMap());
 		model.addAttribute("actionList", actionList);
 
 		Action parent = new Action();

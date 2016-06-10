@@ -12,6 +12,8 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
+import com.activiti.util.Query;
+
 /**
  * 
  * @author seven sins
@@ -23,6 +25,7 @@ public abstract class BaseController {
 
 	protected Integer PAGEINDEX = 1;
 	protected Integer PAGESIZE = 20;
+	protected Query query = new Query();
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -44,7 +47,7 @@ public abstract class BaseController {
 			pageIndex = PAGEINDEX;
 		if (pageSize == null)
 			pageSize = PAGESIZE;
-		Map<String, Object> map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pageIndex", pageIndex);
 		map.put("pageSize", pageSize);
 
@@ -83,28 +86,4 @@ public abstract class BaseController {
 		return map;
 	}
 
-	/**
-	 * 
-	 * @author seven sins
-	 * 
-	 * @CreateDate Jun 10, 2016 2:37:40 PM
-	 */
-	protected class Query {
-		private Map<String, Object> map;
-
-		public Query() {
-			this.map = new HashMap<String, Object>();
-		}
-
-		public Query put(String key, Object value) {
-			this.map.put(key, value);
-
-			return this;
-		}
-
-		public Map<String, Object> getMap() {
-			return map;
-		}
-
-	}
 }

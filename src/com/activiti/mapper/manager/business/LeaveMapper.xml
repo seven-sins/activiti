@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="startTime" column="startTime" />
 		<result property="endTime" column="endTime" />
 		<result property="status" column="status" />
+		<result property="userId" column="userId" />
 	</resultMap>
 
 	<select id="find" parameterType="map" resultMap="leaveRM">
@@ -24,13 +25,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  hours,
 		  startTime,
 		  endTime,
-		  STATUS 
+		  status,
+		  userId 
 		FROM
-		  LEAVE 
-		WHERE 1 = 1 
-		<if test="name != null">
-			and name=#{name}
-		</if>
+		  b_leave 
+		WHERE 1=1
+		<if test="userId != null">and userId = #{userId}</if>
 		order by id desc
 	</select>
 	
@@ -43,21 +43,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  hours,
 		  startTime,
 		  endTime,
-		  STATUS 
+		  status,
+		  userId 
 		FROM
-		  LEAVE 
+		  b_leave 
 		where id = #{id}
 	</select>
 	
 	<insert id="insert" parameterType="com.activiti.po.business.Leave" >
-		INSERT INTO (
+		INSERT INTO b_leave(
 		  category,
 		  reason,
 		  days,
 		  hours,
 		  startTime,
 		  endTime,
-		  status
+		  status,
+		  userId
 		) 
 		VALUES (
 		    #{category},
@@ -66,12 +68,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    #{hours}, 
 		    #{startTime}, 
 		    #{endTime}, 
-		    #{status}
+		    #{status},
+		    #{userId}
 	  	)
 	</insert>
 	
 	<update id="update" parameterType="com.activiti.po.business.Leave" >
-		update leave
+		update b_leave
 		<set>
 			<if test="category != null">
 				category = #{category},
@@ -92,19 +95,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				endTime = #{endTime},
 			</if>
 			<if test="status != null">
-				status = #{status}
+				status = #{status},
+			</if>
+			<if test="userId != null">
+				userId = #{userId}
 			</if>
 		</set>
 		where id = #{id}
 	</update>
 	
 	<delete id="deleteById" parameterType="int">
-		delete from leave
+		delete from b_leave
 		where id = #{id}
 	</delete>
     
 	<delete id="delete" parameterType="int">
-		delete from leave
+		delete from b_leave
 		where id in
 		<foreach collection="array" item="id" open="(" close=")" separator=",">
 			#{id}

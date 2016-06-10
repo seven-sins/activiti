@@ -11,6 +11,7 @@ public class Leave {
 	private Date startTime;
 	private Date endTime;
 	private Integer status = 0;
+	private Integer userId;
 
 	public Integer getId() {
 		return id;
@@ -74,6 +75,14 @@ public class Leave {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 }

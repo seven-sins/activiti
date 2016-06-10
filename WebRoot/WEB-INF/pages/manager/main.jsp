@@ -49,6 +49,12 @@
                         	<li><a href="${ctx }/workflow/deployment" target="iframe">部署信息</a></li>
                         </ul>
                    	</li>
+                   	<li class="item gongwen">
+                    	<div class="nav-header"><a href="javascript:;" class="ue-clear"><span>业务流程</span><i class="icon"></i></a></div>
+                   		<ul class="subnav">
+                   			<li><a href="${ctx }/business/leave" target="iframe">请假</a></li>
+                        </ul>
+                   	</li>
                     <li class="item system"><div class="nav-header"><a href="javascript:;" class="ue-clear"><span>系统管理</span><i class="icon"></i></a></div></li>
                 </ul>
             </div>

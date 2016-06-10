@@ -30,7 +30,13 @@
     	<thead>
         	<tr>
             	<th class="num hide">id</th>
-                <th>名称</th>
+                <th>请假类型</th>
+                <th>原因</th>
+                <th>天数</th>
+                <th>小时</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>状态</th>
                 <th>操作</th>
             </tr>
         </thead>
@@ -38,10 +44,26 @@
         	<t:forEach items="${page.recordList }" var="o">
         		<tr>
 	            	<td class="num hide">${o.id }</td>
-	                <td>${o.name }</td>
+	                <td>${o.category }</td>
+                 	<td>${o.reason }</td>
+                 	<td>${o.days }</td>
+                 	<td>${o.hours }</td>
+                 	<td><t:date date="${o.startTime }" format="yyyy-MM-dd HH:mm"></t:date></td>
+                 	<td><t:date date="${o.endTime }" format="yyyy-MM-dd HH:mm"></t:date></td>
+                 	<td>
+                 		<t:choose>
+                 			<t:when test="${o.status==0 }">未申请</t:when>
+                 			<t:when test="${o.status==1 }">审核中</t:when>
+                 			<t:otherwise>完成</t:otherwise>
+                 		</t:choose>
+                 	</td>
 	                <td class="operate">
 	                	<a href="${ctx }/business/leave/toUpdate?id=${o.id}">修改</a>
 	                	<a url="${ctx }/business/leave/${o.id}" onclick="deleteObj(this)">删除</a>
+	                	<t:choose>
+	                		<t:when test="${o.status==0 }"><a>申请</a></t:when>
+	                		<t:otherwise><a>查看</a></t:otherwise>
+	                	</t:choose>
 	                </td>
 	            </tr>
         	</t:forEach>

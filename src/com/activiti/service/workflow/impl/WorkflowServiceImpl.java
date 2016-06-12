@@ -8,7 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipInputStream;
 
+import org.activiti.engine.FormService;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
@@ -34,11 +39,21 @@ public class WorkflowServiceImpl implements WorkflowService {
 
 	@Autowired
 	ProcessEngine processEngine;
+	@Autowired
+	RuntimeService runtimeService;
+	@Autowired
+	RepositoryService repositoryService;
+	@Autowired
+	TaskService taskService;
+	@Autowired
+	HistoryService historyService;
+	@Autowired
+	FormService formService;
 
 	public void save(String processName, InputStream in) {
 		ZipInputStream zipInputStream = new ZipInputStream(in);
-		processEngine.getRepositoryService() //
-						// 与流程定义相关的service
+		repositoryService //
+							// 与流程定义相关的service
 						.createDeployment() // 创建一个部署对象
 						.name(processName) //
 						.addZipInputStream(zipInputStream)//
@@ -46,14 +61,14 @@ public class WorkflowServiceImpl implements WorkflowService {
 	}
 
 	public List<Deployment> findDeployment() {
-		return processEngine.getRepositoryService()//
+		return repositoryService//
 						.createDeploymentQuery()//
 						.orderByDeploymenTime().desc()//
 						.list();
 	}
 
 	public List<ProcessDefinition> findProcessDefinition(String deploymentId) {
-		return processEngine.getRepositoryService()//
+		return repositoryService//
 						.createProcessDefinitionQuery()//
 						.deploymentId(deploymentId)//
 						.orderByProcessDefinitionVersion().desc()//
@@ -61,27 +76,27 @@ public class WorkflowServiceImpl implements WorkflowService {
 	}
 
 	public InputStream findImageInputStream(String deploymentId, String diagramResourceName) {
-		return processEngine.getRepositoryService()//
+		return repositoryService//
 						.getResourceAsStream(deploymentId, diagramResourceName);
 	}
 
 	public void deleteProcessDefinitionByDeploymentId(Serializable id) {
-		processEngine.getRepositoryService()//
+		repositoryService//
 						.deleteDeployment(id.toString(), true);
 	}
 
 	public ProcessInstance startProcess(String processInstanceKey, Map map) {
-		return processEngine.getRuntimeService()//
+		return runtimeService//
 						.startProcessInstanceByKey(processInstanceKey, map);
 	}
 
 	public ProcessInstance startProcess(String processInstanceKey, String businessKey, Map map) {
-		return processEngine.getRuntimeService()//
+		return runtimeService//
 						.startProcessInstanceByKey(processInstanceKey, businessKey, map);
 	}
 
 	public List<Task> findTaskByName(String name) {
-		return processEngine.getTaskService()//
+		return taskService//
 						.createTaskQuery()//
 						.taskAssignee(name)//
 						.orderByTaskCreateTime().desc()//
@@ -90,14 +105,14 @@ public class WorkflowServiceImpl implements WorkflowService {
 
 	public String findBusinessKeyByTaskId(String taskId) {
 		// 1：使用任务ID，查询任务对象Task
-		Task task = processEngine.getTaskService()//
+		Task task = taskService//
 						.createTaskQuery()//
 						.taskId(taskId)// 使用任务ID查询
 						.singleResult();
 		// 2：使用任务对象Task获取流程实例ID
 		String processInstanceId = task.getProcessInstanceId();
 		// 3：使用流程实例ID，查询正在执行的执行对象表，返回流程实例对象
-		ProcessInstance pi = processEngine.getRuntimeService()//
+		ProcessInstance pi = runtimeService//
 						.createProcessInstanceQuery()//
 						.processInstanceId(processInstanceId)// 使用流程实例ID查询
 						.singleResult();
@@ -111,18 +126,19 @@ public class WorkflowServiceImpl implements WorkflowService {
 		// 返回存放连线的名称集合
 		List<String> list = new ArrayList<String>();
 		// 1:使用任务ID，查询任务对象
-		Task task = processEngine.getTaskService()//
+		Task task = taskService//
 						.createTaskQuery()//
 						.taskId(taskId)// 使用任务ID查询
 						.singleResult();
 		// 2：获取流程定义ID
 		String processDefinitionId = task.getProcessDefinitionId();
 		// 3：查询ProcessDefinitionEntiy对象
-		ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) processEngine.getRepositoryService().getProcessDefinition(processDefinitionId);
+		ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) repositoryService//
+						.getProcessDefinition(processDefinitionId);
 		// 使用任务对象Task获取流程实例ID
 		String processInstanceId = task.getProcessInstanceId();
 		// 使用流程实例ID，查询正在执行的执行对象表，返回流程实例对象
-		ProcessInstance pi = processEngine.getRuntimeService()//
+		ProcessInstance pi = runtimeService//
 						.createProcessInstanceQuery()//
 						.processInstanceId(processInstanceId)// 使用流程实例ID查询
 						.singleResult();
@@ -157,7 +173,7 @@ public class WorkflowServiceImpl implements WorkflowService {
 		 * 1：在完成之前，添加一个批注信息，向act_hi_comment表中添加数据，用于记录对当前申请人的一些审核信息
 		 */
 		// 使用任务ID，查询任务对象，获取流程流程实例ID
-		Task task = processEngine.getTaskService()//
+		Task task = taskService//
 						.createTaskQuery()//
 						.taskId(taskId)// 使用任务ID查询
 						.singleResult();
@@ -172,8 +188,8 @@ public class WorkflowServiceImpl implements WorkflowService {
 		 * 所以要求，添加配置执行使用Authentication.setAuthenticatedUserId();添加当前任务的审核人
 		 * */
 		Authentication.setAuthenticatedUserId(user.getName());
-		processEngine.getTaskService()//
-						.addComment(taskId, processInstanceId, message);
+		taskService//
+		.addComment(taskId, processInstanceId, message);
 		/**
 		 * 2：如果连线的名称是“默认提交”，那么就不需要设置，如果不是，就需要设置流程变量 在完成任务之前，设置流程变量，按照连线的名称，去完成任务
 		 * 流程变量的名称：outcome 流程变量的值：连线的名称
@@ -184,13 +200,13 @@ public class WorkflowServiceImpl implements WorkflowService {
 		}
 
 		// 3：使用任务ID，完成当前人的个人任务，同时流程变量
-		processEngine.getTaskService().complete(taskId, map);
+		taskService.complete(taskId, map);
 		// 4：当任务完成之后，需要指定下一个任务的办理人（使用类）-----已经开发完成
 
 		/**
 		 * 5：在完成任务之后，判断流程是否结束 如果流程结束了，更新请假单表的状态从1变成2（审核中-->审核完成）
 		 */
-		ProcessInstance pi = processEngine.getRuntimeService()//
+		ProcessInstance pi = runtimeService//
 						.createProcessInstanceQuery()//
 						.processInstanceId(processInstanceId)// 使用流程实例ID查询
 						.singleResult();
@@ -201,7 +217,7 @@ public class WorkflowServiceImpl implements WorkflowService {
 
 	public List<Comment> findCommentByTaskId(String taskId) {
 		// 使用当前任务id，查询当前流程对应的历史任务id
-		Task task = processEngine.getTaskService()//
+		Task task = taskService//
 						.createTaskQuery()//
 						.taskId(taskId)//
 						.singleResult();
@@ -209,12 +225,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 		String processInstanceId = task.getProcessInstanceId();
 		// 使用流程实例id，查询历史任务，获取历史任务对应的每个任务id
 
-		return processEngine.getTaskService()//
+		return taskService//
 						.getProcessInstanceComments(processInstanceId);
 	}
 
 	public List<Comment> findCommentByBusinessKey(String businessKey) {
-		HistoricProcessInstance historicProcessInstance = processEngine.getHistoryService()//
+		HistoricProcessInstance historicProcessInstance = historyService//
 						.createHistoricProcessInstanceQuery()//
 						.processInstanceBusinessKey(businessKey)//
 						.singleResult();
@@ -223,11 +239,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 	}
 
 	public ProcessDefinition findProcessDefinitionByTaskId(String taskId) {
-		Task task = processEngine.getTaskService()//
+		Task task = taskService//
 						.createTaskQuery()//
 						.taskId(taskId)//
 						.singleResult();
-		return processEngine.getRepositoryService()//
+
+		return repositoryService//
 						.createProcessDefinitionQuery()//
 						.processDefinitionId(task.getProcessDefinitionId())//
 						.singleResult();
@@ -239,9 +256,9 @@ public class WorkflowServiceImpl implements WorkflowService {
 						.createTaskQuery()//
 						.taskId(taskId)//
 						.singleResult();
-		ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) processEngine.getRepositoryService()//
+		ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) repositoryService//
 						.getProcessDefinition(task.getProcessDefinitionId());
-		ProcessInstance processInstance = processEngine.getRuntimeService()//
+		ProcessInstance processInstance = runtimeService//
 						.createProcessInstanceQuery()//
 						.processInstanceId(task.getProcessInstanceId())//
 						.singleResult();
@@ -258,15 +275,34 @@ public class WorkflowServiceImpl implements WorkflowService {
 	}
 
 	public InputStream getDiagramByProcessInstanceId(String processInstanceId) {
-		// ProcessDefinitionEntity def = (ProcessDefinitionEntity)
-		// processEngine.getRepositoryService()
+		ProcessInstance processInstance = runtimeService//
+						.createProcessInstanceQuery()//
+						.processInstanceId(processInstanceId)//
+						.singleResult();
+		ProcessDefinition processDefinition = repositoryService//
+						.createProcessDefinitionQuery()//
+						.processDefinitionId(processInstance.getProcessDefinitionId())//
+						.singleResult();
+		// ProcessDefinitionEntity processDefinitionEntity =
+		// (ProcessDefinitionEntity) ((RepositoryServiceImpl)
+		// processEngine.getRepositoryService())//
 		// .getDeployedProcessDefinition(processInstance.getProcessDefinitionId());
+
+		// ProcessDefinition procDef = repositoryService//
+		// .createProcessDefinitionQuery().processDefinitionId(processDefinition.getId()).singleResult();
 		//
-		//
+		// ProcessDiagramGenerator generator = new
+		// DefaultProcessDiagramGenerator();
 		// InputStream definitionImageStream =
-		// ProcessDiagramGenerator.generateDiagram(def, "png",
-		// runtimeService.getActiveActivityIds(processInstanceId));
-		// processEngine.getRepositoryService().getde
+		// ProcessDiagramGenerator.generateDiagram(processDefinition, "png",
+		// processEngine.getActiveActivityIds(processInstanceId));
+		//
+		// String diagramResourceName =
+		// processDefinition.getDiagramResourceName();
+		// InputStream imageStream =
+		// repositoryService.getResourceAsStream(processDefinition.getDeploymentId(),
+		// diagramResourceName);
+
 		return null;
 	}
 }

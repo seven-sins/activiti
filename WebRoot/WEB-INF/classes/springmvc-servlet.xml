@@ -18,8 +18,6 @@
 	
 	<context:annotation-config />
 	
-	<!-- 启动Springmvc注解驱动 -->
-    <mvc:annotation-driven/>
  	<!-- 返回json 方法一 需要导入 fastjson.jar包 -->  
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="false">
@@ -34,6 +32,9 @@
                 </property>
             </bean>
         </mvc:message-converters>
+        <mvc:argument-resolvers>
+			<bean class="com.activiti.annotation.SessionMethodArgumentResolver" />
+		</mvc:argument-resolvers>
     </mvc:annotation-driven>
     
 	<mvc:default-servlet-handler/>

@@ -55,6 +55,16 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
+	<!--  -->
+	<filter>
+		<filter-name>AddParams</filter-name>
+		<filter-class>com.activiti.filter.RequestFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AddParams</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	<!-- default -->
 	<welcome-file-list>  
         <welcome-file>index.jsp</welcome-file>  

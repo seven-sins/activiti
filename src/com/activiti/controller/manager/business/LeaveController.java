@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.activiti.annotation.Session;
 import com.activiti.controller.base.BaseController;
+import com.activiti.po.User;
 import com.activiti.po.business.Leave;
 import com.activiti.service.business.LeaveService;
 import com.activiti.service.workflow.WorkflowService;
@@ -59,8 +61,8 @@ public class LeaveController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/business/leave/{id:\\d+}", method = RequestMethod.DELETE)
-	public @ResponseBody
-	Object delete(@PathVariable("id") Integer id) {
+	@ResponseBody
+	public Object delete(@PathVariable("id") Integer id) {
 		leaveService.deleteById(id);
 
 		return result(200, "success");
@@ -73,8 +75,9 @@ public class LeaveController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/business/leave", method = RequestMethod.POST)
-	public @ResponseBody
-	Object create(Leave leave) {
+	@ResponseBody
+	public Object create(Leave leave, @Session("me") User me) {
+		leave.setUserId(me.getId());
 		leaveService.insert(leave);
 
 		return result(200, "success");
@@ -88,8 +91,8 @@ public class LeaveController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/business/leave/{id:\\d+}", method = RequestMethod.PUT)
-	public @ResponseBody
-	Object update(Leave leave, @PathVariable("id") Integer id) {
+	@ResponseBody
+	public Object update(Leave leave, @PathVariable("id") Integer id) {
 		leave.setId(id);
 		leaveService.update(leave);
 

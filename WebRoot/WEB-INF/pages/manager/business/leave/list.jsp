@@ -30,14 +30,14 @@
     	<thead>
         	<tr>
             	<th class="num hide">id</th>
-                <th>请假类型</th>
-                <th>原因</th>
-                <th>天数</th>
-                <th>小时</th>
-                <th>开始时间</th>
-                <th>结束时间</th>
-                <th>状态</th>
-                <th>操作</th>
+                <th width="200px">请假类型</th>
+                <th width="300px">原因</th>
+                <th width="60px">天数</th>
+                <th width="60px">小时</th>
+                <th width="200px">开始时间</th>
+                <th width="200px">结束时间</th>
+                <th width="100px">状态</th>
+                <th width="200px">操作</th>
             </tr>
         </thead>
         <tbody>

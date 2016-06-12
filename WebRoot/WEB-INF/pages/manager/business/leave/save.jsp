@@ -35,19 +35,19 @@
     </p>
     <p class="short-input ue-clear">
     	<label>天数：</label>
-        <input type="text" name="days"  data-require="true"  data-decimal="true"  value="${leave != null ? leave.days : '' }" placeholder="天数"  />
+        <input type="text" name="days"  data-require="true"   value="${leave != null ? leave.days : '' }" placeholder="天数"  />
         <span><em>*</em></span>
     </p>
     <p class="short-input ue-clear">
     	<label>小时：</label>
-        <input type="text" name="hours"  data-require="true"  data-decimal="true"  value="${leave != null ? leave.hours : '' }" placeholder="小时"  />
+        <input type="text" name="hours"  data-require="true"   value="${leave != null ? leave.hours : '' }" placeholder="小时"  />
         <span><em>*</em></span>
     </p>
     <p class="short-input ue-clear">
     	<label>开始时间：</label>
         <input type="text" name="startTime"  data-require="true"  
 	        <t:if test="${leave != null }">
-	        	<t:date date="${leave.startTime }" format="yyyy-MM-dd HH:mm"></t:date>
+	        	value = "<t:date date="${leave.startTime }" format="yyyy-MM-dd HH:mm"></t:date>"
 	        </t:if>
         placeholder="开始时间"  />
         <span><em>*</em></span>
@@ -56,7 +56,7 @@
     	<label>结束时间：</label>
         <input type="text" name="endTime"  data-require="true"  
 	        <t:if test="${leave != null }">
-	        	<t:date date="${leave.endTime }" format="yyyy-MM-dd HH:mm"></t:date>
+	        	value = "<t:date date="${leave.endTime }" format="yyyy-MM-dd HH:mm"></t:date>"
 	        </t:if>
         placeholder="结束时间"  />
         <span><em>*</em></span>
@@ -72,9 +72,9 @@
 <script type="text/javascript">
 // 保存
 function save(obj, redirectUrl){
-	validate();
-	return false;
-	
+	if(!validate()){
+		return false;
+	}
 	
 	var url = $(obj).attr("url");
 	var regex = /\d+$/;
@@ -83,10 +83,6 @@ function save(obj, redirectUrl){
 		type = "PUT";
 	}
 	var data = $("#form1").serialize();
-	if($.isNull(data.name)){
-		$.msg({msg: "角色名称不能为空！", second: 0});
-		return false;
-	}
 	
 	$.ajax({
 		url: url,

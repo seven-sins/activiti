@@ -29,26 +29,8 @@ function validate(obj){
 	var flag = true; // 验证通过返回true，反之返回false
 	// 非空验证
 	$(parent).find("input").each(function(){
-		if($(this).attr("data-require")){ // require属性为true
+		if($(this).attr("data-require")){ // data-require属性为true
 			if($.isNull(this.value)){ // this.value的值为空
-				flag = false;
-				$(this).css("border-color","#d00");
-				$(this).bind("keyup", function(){
-					if($.isNull(this.value)){
-						$(this).css("border-color","#d00");
-					}else{
-						$(this).css("border-color","#c5d6e0");
-					}
-				})
-			}
-		}
-	});
-	// 数字验证
-	$(parent).find("input").each(function(){
-		if($(this).attr("data-decimal")){ // decimal属性为true
-			if($.isNull(this.value)){
-				continue;
-			}else{
 				flag = false;
 				$(this).css("border-color","#d00");
 				$(this).bind("keyup", function(){
@@ -63,4 +45,4 @@ function validate(obj){
 	});
 	
 	return flag;
-}continue
+}

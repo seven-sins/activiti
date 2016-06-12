@@ -40,8 +40,7 @@ public class LeaveController extends BaseController {
 		Map<String, Object> map = super.initPagination(pageIndex, pageSize);
 		List<Leave> dataList = leaveService.find(map);
 		PageInfo pageInfo = new PageInfo(dataList);
-		Page page = new Page(pageInfo.getPageNum(), pageInfo.getPageSize(),
-				dataList, (int) pageInfo.getTotal());
+		Page page = new Page(pageInfo.getPageNum(), pageInfo.getPageSize(), dataList, (int) pageInfo.getTotal());
 		model.addAttribute("page", page);
 
 		return "/manager/business/leave/list.jsp";
@@ -62,7 +61,7 @@ public class LeaveController extends BaseController {
 	}
 
 	/**
-	 * 创建
+	 * 创建 TODO: 日期参数转换有误，待解决
 	 * 
 	 * @param
 	 * @return

@@ -20,4 +20,5 @@ public interface LeaveService {
 	public void deleteById(Serializable id);
 
 	public void delete(Serializable[] ids);
+
 }

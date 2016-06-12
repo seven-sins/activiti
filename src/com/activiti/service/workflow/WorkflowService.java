@@ -96,7 +96,7 @@ public interface WorkflowService {
 	/**
 	 * 指定连线名称完成任务
 	 */
-	public Object completeTask(Workflow workFlow, User user);
+	public Object completeTask(Workflow workflow, User user);
 
 	/**
 	 * 根据任务Id查询批注信息
@@ -129,4 +129,20 @@ public interface WorkflowService {
 	 * @return
 	 */
 	public Coord findCoordByTaskId(String taskId);
+
+	/**
+	 * 根据流程实例Id获取当前任务节点信息
+	 * 
+	 * @param processInstanceId
+	 * @return
+	 */
+	public Task getCurrentTaskByProcessInstanceId(String processInstanceId);
+
+	/**
+	 * 获取流程图
+	 * 
+	 * @param processInstanceId
+	 * @return
+	 */
+	public InputStream getDiagramByProcessInstanceId(String processInstanceId);
 }

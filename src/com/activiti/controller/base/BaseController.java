@@ -23,7 +23,7 @@ public abstract class BaseController {
 
 	protected Integer PAGEINDEX = 1;
 	protected Integer PAGESIZE = 20;
-	protected Param param = new Param();
+	protected Param params = new Param();
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {

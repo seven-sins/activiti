@@ -52,17 +52,19 @@
                  	<td><t:date date="${o.endTime }" format="yyyy-MM-dd HH:mm"></t:date></td>
                  	<td>
                  		<t:choose>
-                 			<t:when test="${o.status==0 }">未申请</t:when>
-                 			<t:when test="${o.status==1 }">审核中</t:when>
-                 			<t:otherwise>完成</t:otherwise>
+                 			<t:when test="${o.status==0 }"><span class="green">未申请</span></t:when>
+                 			<t:when test="${o.status==1 }"><span class="red">审核中</span></t:when>
+                 			<t:otherwise><span class="gray">完成</span></t:otherwise>
                  		</t:choose>
                  	</td>
 	                <td class="operate">
-	                	<a href="${ctx }/business/leave/toUpdate?id=${o.id}">修改</a>
-	                	<a url="${ctx }/business/leave/${o.id}" onclick="deleteObj(this)">删除</a>
 	                	<t:choose>
-	                		<t:when test="${o.status==0 }"><a onclick="apply('${ctx }/business/leave/${o.id}/apply')">申请</a></t:when>
-	                		<t:otherwise><a>查看</a></t:otherwise>
+	                		<t:when test="${o.status==0 }">
+           				        <a href="${ctx }/business/leave/toUpdate?id=${o.id}">修改</a>
+	                			<a url="${ctx }/business/leave/${o.id}" onclick="deleteObj(this)">删除</a>
+	                			<a onclick="apply('${ctx }/business/leave/${o.id}/apply')">申请</a>
+                			</t:when>
+	                		<t:otherwise><a href="${ctx }/business/leave/${o.id}/view">查看</a></t:otherwise>
 	                	</t:choose>
 	                </td>
 	            </tr>
@@ -89,8 +91,13 @@
 <script type="text/javascript">
 function apply(url){
 	$.put(url, {}, function(result){
-		
-		console.log(result);
+		if(result.code == 200){
+			$.msg({msg:"操作成功", fontSize: "18px", second: 0, callback: function(){
+				window.location.reload();
+			}});
+		}else{
+			$.msg("操作失败");
+		}
 	})
 }
 </script>

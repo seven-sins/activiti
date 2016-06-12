@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -103,9 +104,38 @@ public class LeaveController extends BaseController {
 	@RequestMapping(value = "/business/leave/{id:\\d+}/apply", method = RequestMethod.PUT)
 	@ResponseBody
 	public Object apply(@PathVariable("id") Integer id) {
-		ProcessInstance processInstance = workflowService.startProcess("leaveBillProcess", null);
+		ProcessInstance processInstance = workflowService.startProcess("leaveBill", "leave:" + id,//
+						params.put("proposer", "张郃")//
+										.put("departmentManager", "司马懿")//
+										.put("generalManager", "曹操")//
+										.getMap());
+		if (processInstance == null) {
+			return result(400, "开启流程实例出错！");
+		}
+		Task task = workflowService.getCurrentTaskByProcessInstanceId(processInstance.getId()); // 获取当前任务节点信息
+
+		Leave leave = leaveService.get(id);
+		leave.setProcessInstanceId(processInstance.getId());
+		leave.setCurrentStep(task.getName()); // 当前任务节点名称
+		leave.setCurrentAssignee(task.getAssignee());// 当前任务节点办理人
+		leave.setStatus(1); // 0未开始，1审核中，2结束
+		leaveService.update(leave);
 
 		return result(200, "success");
+	}
+
+	/**
+	 * 查看
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/business/leave/{id:\\d+}/view", method = RequestMethod.GET)
+	public Object view(Model model, @PathVariable("id") Integer id) {
+		Leave leave = leaveService.get(id);
+		model.addAttribute("leave", leave);
+
+		return "/manager/business/leave/view.jsp";
 	}
 
 	/**

@@ -78,7 +78,6 @@ public class WorkflowServiceImpl implements WorkflowService {
 	public ProcessInstance startProcess(String processInstanceKey, String businessKey, Map map) {
 		return processEngine.getRuntimeService()//
 						.startProcessInstanceByKey(processInstanceKey, businessKey, map);
-
 	}
 
 	public List<Task> findTaskByName(String name) {
@@ -146,15 +145,13 @@ public class WorkflowServiceImpl implements WorkflowService {
 		return list;
 	}
 
-	public Object completeTask(Workflow workFlow, User user) {
+	public Object completeTask(Workflow workflow, User user) {
 		// 获取任务ID
-		String taskId = workFlow.getTaskId();
+		String taskId = workflow.getTaskId();
 		// 获取连线的名称
-		String outcome = workFlow.getOutcome();
+		String outcome = workflow.getOutcome();
 		// 批注信息
-		String message = workFlow.getComment();
-		// 获取请假单ID
-		Integer id = workFlow.getId();
+		String message = workflow.getComment();
 
 		/**
 		 * 1：在完成之前，添加一个批注信息，向act_hi_comment表中添加数据，用于记录对当前申请人的一些审核信息
@@ -254,4 +251,22 @@ public class WorkflowServiceImpl implements WorkflowService {
 		return coord;
 	}
 
+	public Task getCurrentTaskByProcessInstanceId(String processInstanceId) {
+		return processEngine.getTaskService().createTaskQuery()//
+						.processInstanceId(processInstanceId)//
+						.singleResult();
+	}
+
+	public InputStream getDiagramByProcessInstanceId(String processInstanceId) {
+		// ProcessDefinitionEntity def = (ProcessDefinitionEntity)
+		// processEngine.getRepositoryService()
+		// .getDeployedProcessDefinition(processInstance.getProcessDefinitionId());
+		//
+		//
+		// InputStream definitionImageStream =
+		// ProcessDiagramGenerator.generateDiagram(def, "png",
+		// runtimeService.getActiveActivityIds(processInstanceId));
+		// processEngine.getRepositoryService().getde
+		return null;
+	}
 }

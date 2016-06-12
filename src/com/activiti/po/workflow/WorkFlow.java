@@ -11,7 +11,7 @@ public class Workflow {
 	private String imageName; // 资源文件名称
 	private String taskId; // 任务ID
 	private String outcome; // 连线名称
-	private String comment; // 备注
+	private String comment = ""; // 批注
 
 	public String getDiagramResourceName() {
 		return diagramResourceName;

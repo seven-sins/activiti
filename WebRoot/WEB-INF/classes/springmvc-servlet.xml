@@ -58,8 +58,6 @@
 		<mvc:interceptor>
 			<!-- /**表示所有url包括子url -->
 			<mvc:mapping path="/**"/>
-			<!-- 静态资源不拦截 -->
-			<mvc:exclude-mapping path="/resources/**"/>
 			<bean class="com.activiti.interceptor.CheckLogin"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

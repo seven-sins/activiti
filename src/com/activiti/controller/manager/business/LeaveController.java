@@ -45,7 +45,8 @@ public class LeaveController extends BaseController {
 		Map<String, Object> map = super.initPagination(pageIndex, pageSize);
 		List<Leave> dataList = leaveService.find(map);
 		PageInfo pageInfo = new PageInfo(dataList);
-		Page page = new Page(pageInfo.getPageNum(), pageInfo.getPageSize(), dataList, (int) pageInfo.getTotal());
+		Page page = new Page(pageInfo.getPageNum(), pageInfo.getPageSize(),
+				dataList, (int) pageInfo.getTotal());
 		model.addAttribute("page", page);
 
 		return "/manager/business/leave/list.jsp";
@@ -104,15 +105,17 @@ public class LeaveController extends BaseController {
 	@RequestMapping(value = "/business/leave/{id:\\d+}/apply", method = RequestMethod.PUT)
 	@ResponseBody
 	public Object apply(@PathVariable("id") Integer id) {
-		ProcessInstance processInstance = workflowService.startProcess("leaveBill", "leave:" + id,//
-						params.put("proposer", "张郃")//
-										.put("departmentManager", "司马懿")//
-										.put("generalManager", "曹操")//
-										.getMap());
+		ProcessInstance processInstance = workflowService.startProcess(
+				"leaveBill", "leave:" + id,//
+				params.put("proposer", "张郃")//
+						.put("departmentManager", "司马懿")//
+						.put("generalManager", "曹操")//
+						.getMap());
 		if (processInstance == null) {
 			return result(400, "开启流程实例出错！");
 		}
-		Task task = workflowService.getCurrentTaskByProcessInstanceId(processInstance.getId()); // 获取当前任务节点信息
+		Task task = workflowService
+				.getCurrentTaskByProcessInstanceId(processInstance.getId()); // 获取当前任务节点信息
 
 		Leave leave = leaveService.get(id);
 		leave.setProcessInstanceId(processInstance.getId());

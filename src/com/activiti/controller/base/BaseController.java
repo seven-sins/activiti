@@ -29,7 +29,8 @@ public abstract class BaseController {
 	public void initBinder(WebDataBinder binder) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(true);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(
+				dateFormat, true));
 	}
 
 	/**
@@ -85,7 +86,7 @@ public abstract class BaseController {
 
 	/**
 	 * 
-	 * @ClassName: Query
+	 * @ClassName: Param
 	 * @Description:
 	 * @author seven sins
 	 * @date 2016年6月12日

@@ -3,6 +3,7 @@ package com.activiti.controller.manager.business;
 import java.util.List;
 import java.util.Map;
 
+import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,7 +65,7 @@ public class LeaveController extends BaseController {
 	}
 
 	/**
-	 * 创建 TODO: 日期参数转换有误，待解决
+	 * 创建 TODO 日期参数转换有误(转换时丢失时间)，待解决
 	 * 
 	 * @param
 	 * @return
@@ -102,6 +103,7 @@ public class LeaveController extends BaseController {
 	@RequestMapping(value = "/business/leave/{id:\\d+}/apply", method = RequestMethod.PUT)
 	@ResponseBody
 	public Object apply(@PathVariable("id") Integer id) {
+		ProcessInstance processInstance = workflowService.startProcess("leaveBillProcess", null);
 
 		return result(200, "success");
 	}

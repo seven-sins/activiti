@@ -1,6 +1,5 @@
 package com.activiti.controller.manager;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -97,8 +96,7 @@ public class ActionController extends BaseController {
 		if (parentId == null)
 			parentId = 0;
 
-		List<Action> actionList = actionService.find(query.put("parentId", 0)
-				.getMap());
+		List<Action> actionList = actionService.find(param.put("parentId", 0).getMap());
 		model.addAttribute("actionList", actionList);
 
 		Action parent = new Action();
@@ -124,9 +122,7 @@ public class ActionController extends BaseController {
 		Action action = actionService.get(id);
 		model.addAttribute("action", action);
 
-		Map<String, Object> map = new HashMap();
-		map.put("parentId", 0);
-		List<Action> actionList = actionService.find(map);
+		List<Action> actionList = actionService.find(param.put("parentId", 0).getMap());
 		model.addAttribute("actionList", actionList);
 
 		Action parent = new Action();

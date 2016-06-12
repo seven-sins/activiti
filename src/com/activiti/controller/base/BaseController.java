@@ -12,8 +12,6 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import com.activiti.util.Query;
-
 /**
  * 
  * @author seven sins
@@ -25,14 +23,13 @@ public abstract class BaseController {
 
 	protected Integer PAGEINDEX = 1;
 	protected Integer PAGESIZE = 20;
-	protected Query query = new Query();
+	protected Param param = new Param();
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(true);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(
-				dateFormat, true));
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 
 	/**
@@ -84,6 +81,34 @@ public abstract class BaseController {
 		map.put("data", data);
 
 		return map;
+	}
+
+	/**
+	 * 
+	 * @ClassName: Query
+	 * @Description:
+	 * @author seven sins
+	 * @date 2016年6月12日
+	 */
+	protected class Param {
+		private Map<String, Object> map;
+
+		public Param() {
+			this.map = new HashMap<String, Object>();
+		}
+
+		public Param put(String key, Object value) {
+			this.map.put(key, value);
+
+			return this;
+		}
+
+		public Map<String, Object> getMap() {
+			Map<String, Object> param = this.map;
+			this.map = new HashMap<String, Object>();
+
+			return param;
+		}
 	}
 
 }

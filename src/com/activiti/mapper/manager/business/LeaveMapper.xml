@@ -14,6 +14,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="endTime" column="endTime" />
 		<result property="status" column="status" />
 		<result property="userId" column="userId" />
+		<result property="processInstanceId" column="processInstanceId" />
+		<result property="currentStep" column="currentStep" />
+		<result property="currentAssignee" column="currentAssignee" />
 	</resultMap>
 
 	<select id="find" parameterType="map" resultMap="leaveRM">
@@ -26,7 +29,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  startTime,
 		  endTime,
 		  status,
-		  userId 
+		  userId,
+		  processInstanceId,
+		  currentStep,
+		  currentAssignee 
 		FROM
 		  b_leave 
 		WHERE 1=1
@@ -44,7 +50,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  startTime,
 		  endTime,
 		  status,
-		  userId 
+		  userId,
+		  processInstanceId,
+		  currentStep,
+		  currentAssignee  
 		FROM
 		  b_leave 
 		where id = #{id}
@@ -59,7 +68,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  startTime,
 		  endTime,
 		  status,
-		  userId
+		  userId,
+		  processInstanceId,
+		  currentStep,
+		  currentAssignee 
 		) 
 		VALUES (
 		    #{category},
@@ -69,7 +81,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    #{startTime}, 
 		    #{endTime}, 
 		    #{status},
-		    #{userId}
+		    #{userId},
+		    #{processInstanceId},
+		  	#{currentStep},
+		  	#{currentAssignee} 
 	  	)
 	</insert>
 	
@@ -98,7 +113,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				status = #{status},
 			</if>
 			<if test="userId != null">
-				userId = #{userId}
+				userId = #{userId},
+			</if>
+			<if test="processInstanceId != null">
+				processInstanceId = #{processInstanceId},
+			</if>
+			<if test="currentStep != null">
+				currentStep = #{currentStep},
+			</if>
+			<if test="currentAssignee != null">
+				currentAssignee = #{currentAssignee}
 			</if>
 		</set>
 		where id = #{id}

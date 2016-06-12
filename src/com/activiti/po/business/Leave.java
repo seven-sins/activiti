@@ -12,6 +12,9 @@ public class Leave {
 	private Date endTime;
 	private Integer status = 0;
 	private Integer userId;
+	private String processInstanceId;
+	private String currentStep;
+	private String currentAssignee;
 
 	public Integer getId() {
 		return id;
@@ -83,6 +86,30 @@ public class Leave {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public String getProcessInstanceId() {
+		return processInstanceId;
+	}
+
+	public void setProcessInstanceId(String processInstanceId) {
+		this.processInstanceId = processInstanceId;
+	}
+
+	public String getCurrentStep() {
+		return currentStep;
+	}
+
+	public void setCurrentStep(String currentStep) {
+		this.currentStep = currentStep;
+	}
+
+	public String getCurrentAssignee() {
+		return currentAssignee;
+	}
+
+	public void setCurrentAssignee(String currentAssignee) {
+		this.currentAssignee = currentAssignee;
 	}
 
 }

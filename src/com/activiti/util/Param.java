@@ -8,20 +8,23 @@ import java.util.Map;
  * @author seven sins
  * @CreateDate Jun 10, 2016 4:16:30 PM
  */
-public class Query {
+public class Param {
 	private Map<String, Object> map;
 
-	public Query() {
+	public Param() {
 		this.map = new HashMap<String, Object>();
 	}
 
-	public Query put(String key, Object value) {
+	public Param put(String key, Object value) {
 		this.map.put(key, value);
 
 		return this;
 	}
 
 	public Map<String, Object> getMap() {
-		return map;
+		Map<String, Object> param = this.map;
+		this.map = new HashMap<String, Object>();
+
+		return param;
 	}
 }

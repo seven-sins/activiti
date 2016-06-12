@@ -48,8 +48,7 @@ public interface WorkflowService {
 	 *            资源图片名称
 	 * @return
 	 */
-	public InputStream findImageInputStream(String deploymentId,
-			String diagramResourceName);
+	public InputStream findImageInputStream(String deploymentId, String diagramResourceName);
 
 	/**
 	 * 使用部署对象id, 删除流程定义(级联删除)
@@ -66,8 +65,7 @@ public interface WorkflowService {
 	 */
 	public void startProcess(String processInstanceKey, Map map);
 
-	public void startProcess(String processInstanceKey, String businessKey,
-			Map map);
+	public void startProcess(String processInstanceKey, String businessKey, Map map);
 
 	/**
 	 * 获取任务

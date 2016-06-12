@@ -12,7 +12,7 @@
 <div class="title">
 	<h2>
 		部署流程
-	</h2>
+	</h2> 
 </div>
 <div class="main">
 <form id="form1" action="${ctx }/workflow/deployment" autocomplete="off" method="POST" enctype="multipart/form-data" >

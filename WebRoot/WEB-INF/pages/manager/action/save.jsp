@@ -98,7 +98,6 @@ function save(obj, redirectUrl){
 		type: type,
 		data: data,
 		success: function(result){
-			result = JSON.parse(result);
 			if(result.code == 200){
 				window.location.href = redirectUrl;
 			}else{

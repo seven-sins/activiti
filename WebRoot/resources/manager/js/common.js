@@ -5,7 +5,6 @@ function deleteObj(obj){
 	    title:'系统消息',
 	    confirm:function(){
 	    	$.remove($(obj).attr("url"), {}, function(result){
-	    		result = JSON.parse(result);
 	    		if(result.code == 200){
 	    			location.reload();
 	    		}else{

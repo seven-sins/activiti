@@ -121,13 +121,14 @@
 		})
 		//
 		$.get("${ctx}/privilege/urls/" + roleId, {}, function(result){
-			result = JSON.parse(result);
-			for(var i=0;i<result.length;i++){
-				$("input[type='checkbox']").each(function(){
-					if(this.value == result[i].id){
-						this.checked = true;
-					}
-				})
+			if(result != null && result.length > 0){
+				for(var i=0;i<result.length;i++){
+					$("input[type='checkbox']").each(function(){
+						if(this.value == result[i].id){
+							this.checked = true;
+						}
+					})
+				}
 			}
 		})
 	}
@@ -144,7 +145,6 @@
 			}
 		})
 		$.put("${ctx}/privilege/urls/" + roleId, {ids: ids.join(",")}, function(result){
-			result = JSON.parse(result);
 			if(result.code == 200){
 				$.msg({msg:"保存成功", fontSize:"16px", second: 0});
 			}else{

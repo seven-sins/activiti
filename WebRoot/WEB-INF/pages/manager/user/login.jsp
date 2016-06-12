@@ -11,7 +11,6 @@ $(function(){
 	$.login({
 		submit:function(user){
 			$.post("${ctx}/dologin", user, function(result){
-				result = JSON.parse(result);
 				if(result.code==200){
 					if(window.parent!=window){
 						window.location.href="${ctx}/main";

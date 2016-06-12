@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 
@@ -62,10 +63,11 @@ public interface WorkflowService {
 	 * 
 	 * @param processInstanceKey
 	 * @param map
+	 * @return
 	 */
-	public void startProcess(String processInstanceKey, Map map);
+	public ProcessInstance startProcess(String processInstanceKey, Map map);
 
-	public void startProcess(String processInstanceKey, String businessKey, Map map);
+	public ProcessInstance startProcess(String processInstanceKey, String businessKey, Map map);
 
 	/**
 	 * 获取任务

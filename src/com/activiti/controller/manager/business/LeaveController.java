@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.activiti.controller.base.BaseController;
 import com.activiti.po.business.Leave;
 import com.activiti.service.business.LeaveService;
+import com.activiti.service.workflow.WorkflowService;
 import com.activiti.util.Page;
 import com.github.pagehelper.PageInfo;
 
@@ -28,6 +29,8 @@ public class LeaveController extends BaseController {
 
 	@Autowired
 	LeaveService leaveService;
+	@Autowired
+	WorkflowService workflowService;
 
 	/**
 	 * 列表页面
@@ -91,6 +94,19 @@ public class LeaveController extends BaseController {
 	}
 
 	/**
+	 * 申请
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/business/leave/{id:\\d+}/apply", method = RequestMethod.PUT)
+	@ResponseBody
+	public Object apply(@PathVariable("id") Integer id) {
+
+		return result(200, "success");
+	}
+
+	/**
 	 * 添加页面
 	 * 
 	 * @param model
@@ -115,4 +131,5 @@ public class LeaveController extends BaseController {
 
 		return "/manager/business/leave/save.jsp";
 	}
+
 }

@@ -61,7 +61,7 @@
 	                	<a href="${ctx }/business/leave/toUpdate?id=${o.id}">修改</a>
 	                	<a url="${ctx }/business/leave/${o.id}" onclick="deleteObj(this)">删除</a>
 	                	<t:choose>
-	                		<t:when test="${o.status==0 }"><a>申请</a></t:when>
+	                		<t:when test="${o.status==0 }"><a onclick="apply('${ctx }/business/leave/${o.id}/apply')">申请</a></t:when>
 	                		<t:otherwise><a>查看</a></t:otherwise>
 	                	</t:choose>
 	                </td>
@@ -85,5 +85,16 @@
 	</script>
 </div>
 <!-- 分页 end -->
+
+<script type="text/javascript">
+function apply(url){
+	$.put(url, {}, function(result){
+		
+		console.log(result);
+	})
+}
+</script>
+
+
 </body>
 </html>

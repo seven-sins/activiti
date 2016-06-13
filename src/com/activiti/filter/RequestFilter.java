@@ -13,10 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class RequestFilter extends OncePerRequestFilter {
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request,
-			HttpServletResponse response, FilterChain chain)
-			throws ServletException, IOException {
-
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 		chain.doFilter(new HttpServletRequestWrapper(request) {
 			@Override
 			public String[] getParameterValues(String name) {
@@ -25,8 +22,7 @@ public class RequestFilter extends OncePerRequestFilter {
 					return null;
 				}
 				for (int i = 0; i < values.length; i++) {
-					System.out.println("name:" + name + "------value:"
-							+ values[i]);
+					System.out.println("name:" + name + "------value:" + values[i]);
 				}
 
 				return values;

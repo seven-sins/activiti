@@ -15,7 +15,7 @@
 	</h2> 
 </div>
 <div class="main">
-<form id="form1" action="${ctx }/workflow/deployment" autocomplete="off" method="POST" enctype="multipart/form-data" >
+<form id="form1" action="${ctx }/workflow/deploy" autocomplete="off" method="POST" enctype="multipart/form-data" >
 	<p class="short-input ue-clear">
     	<label>流程名称：</label>
         <input type="text" name="processName" data-require="true" placeholder="上传流程定义"  />

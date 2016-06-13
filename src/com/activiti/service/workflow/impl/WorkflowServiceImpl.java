@@ -8,13 +8,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipInputStream;
 
+import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.FormService;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.PvmTransition;
@@ -24,6 +28,7 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
+import org.activiti.image.ProcessDiagramGenerator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +54,8 @@ public class WorkflowServiceImpl implements WorkflowService {
 	HistoryService historyService;
 	@Autowired
 	FormService formService;
+	@Autowired
+	ProcessEngineConfiguration processEngineConfiguration;
 
 	public void save(String processName, InputStream in) {
 		ZipInputStream zipInputStream = new ZipInputStream(in);
@@ -269,40 +276,40 @@ public class WorkflowServiceImpl implements WorkflowService {
 	}
 
 	public Task getCurrentTaskByProcessInstanceId(String processInstanceId) {
-		return processEngine.getTaskService().createTaskQuery()//
-						.processInstanceId(processInstanceId)//
-						.singleResult();
+		ProcessInstance processInstance = getProcessInstanceById(processInstanceId);
+		Task currentTask = null;
+		try {
+			currentTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).taskDefinitionKey(processInstance.getActivityId()).singleResult();
+		} catch (Exception e) {
+		}
+
+		return currentTask;
 	}
 
-	public InputStream getDiagramByProcessInstanceId(String processInstanceId) {
-		ProcessInstance processInstance = runtimeService//
-						.createProcessInstanceQuery()//
-						.processInstanceId(processInstanceId)//
-						.singleResult();
-		ProcessDefinition processDefinition = repositoryService//
-						.createProcessDefinitionQuery()//
-						.processDefinitionId(processInstance.getProcessDefinitionId())//
-						.singleResult();
-		// ProcessDefinitionEntity processDefinitionEntity =
-		// (ProcessDefinitionEntity) ((RepositoryServiceImpl)
-		// processEngine.getRepositoryService())//
-		// .getDeployedProcessDefinition(processInstance.getProcessDefinitionId());
+	public InputStream traceProcessDiagram(String processInstanceId) {
+		Task task = getCurrentTaskByProcessInstanceId(processInstanceId);
+		ProcessInstance processInstance = getProcessInstanceById(processInstanceId);
+		BpmnModel bpmnModel = repositoryService.getBpmnModel(processInstance.getProcessDefinitionId());
+		List<String> activeActivityIds = runtimeService.getActiveActivityIds(task.getExecutionId());
 
-		// ProcessDefinition procDef = repositoryService//
-		// .createProcessDefinitionQuery().processDefinitionId(processDefinition.getId()).singleResult();
-		//
-		// ProcessDiagramGenerator generator = new
-		// DefaultProcessDiagramGenerator();
-		// InputStream definitionImageStream =
-		// ProcessDiagramGenerator.generateDiagram(processDefinition, "png",
-		// processEngine.getActiveActivityIds(processInstanceId));
-		//
-		// String diagramResourceName =
-		// processDefinition.getDiagramResourceName();
-		// InputStream imageStream =
-		// repositoryService.getResourceAsStream(processDefinition.getDeploymentId(),
-		// diagramResourceName);
+		processEngineConfiguration = processEngine.getProcessEngineConfiguration();
+		Context.setProcessEngineConfiguration((ProcessEngineConfigurationImpl) processEngineConfiguration);
 
-		return null;
+		ProcessDiagramGenerator diagramGenerator = processEngineConfiguration.getProcessDiagramGenerator();
+		InputStream imageStream = diagramGenerator//
+						.generateDiagram(//
+										bpmnModel, //
+										"png", //
+										activeActivityIds,//
+										new ArrayList(),//
+										processEngineConfiguration.getActivityFontName(), //
+										processEngineConfiguration.getLabelFontName(), //
+										processEngineConfiguration.getClassLoader(), 1.0);
+
+		return imageStream;
+	}
+
+	public ProcessInstance getProcessInstanceById(String processInstanceId) {
+		return runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
 	}
 }

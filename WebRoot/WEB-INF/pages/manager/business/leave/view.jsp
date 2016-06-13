@@ -60,5 +60,9 @@
 <div class="btn ue-clear">
     <a href="${ctx }/business/leave" class="clear">返回</a>
 </div>
+
+<div>
+	<img src="${ctx }/workflow/trace/diagram/${leave.processInstanceId}" />
+</div>
 </body>
 </html>

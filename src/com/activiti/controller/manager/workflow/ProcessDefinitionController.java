@@ -26,10 +26,8 @@ public class ProcessDefinitionController {
 	WorkflowService workflowService;
 
 	@RequestMapping(value = "/workflow/processDefinition/{deploymentId}", method = RequestMethod.GET)
-	public String processDefinition(Model model,
-			@PathVariable("deploymentId") String deploymentId) {
-		List<ProcessDefinition> dataList = workflowService
-				.findProcessDefinition(deploymentId);
+	public String processDefinition(Model model, @PathVariable("deploymentId") String deploymentId) {
+		List<ProcessDefinition> dataList = workflowService.findProcessDefinition(deploymentId);
 		model.addAttribute("dataList", dataList);
 
 		return "/manager/workflow/processDefinition/list.jsp";
@@ -57,11 +55,9 @@ public class ProcessDefinitionController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/workflow/processDefinition/showImg", method = RequestMethod.GET)
-	public void showImg(HttpServletResponse response, Workflow workflow)
-			throws IOException {
+	public void showImg(HttpServletResponse response, Workflow workflow) throws IOException {
 		/** 获取图片输入流 */
-		InputStream in = workflowService.findImageInputStream(
-				workflow.getDeploymentId(), workflow.getDiagramResourceName());
+		InputStream in = workflowService.findImageInputStream(workflow.getDeploymentId(), workflow.getDiagramResourceName());
 
 		OutputStream out = response.getOutputStream();
 		for (int b = -1; (b = in.read()) != -1;) {
@@ -69,5 +65,23 @@ public class ProcessDefinitionController {
 		}
 		out.close();
 		in.close();
+	}
+
+	/**
+	 * 读取带跟踪的图片
+	 * 
+	 * @param processInstanceId
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/workflow/trace/diagram/{processInstanceId}", method = RequestMethod.GET)
+	public void traceImage(@PathVariable("processInstanceId") String processInstanceId, HttpServletResponse response) throws IOException {
+		InputStream imageStream = workflowService.traceProcessDiagram(processInstanceId);
+
+		// 输出资源内容到相应对象
+		byte[] b = new byte[1024];
+		int len;
+		while ((len = imageStream.read(b, 0, 1024)) != -1) {
+			response.getOutputStream().write(b, 0, len);
+		}
 	}
 }

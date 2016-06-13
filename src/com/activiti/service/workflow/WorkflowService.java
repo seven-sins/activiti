@@ -139,10 +139,18 @@ public interface WorkflowService {
 	public Task getCurrentTaskByProcessInstanceId(String processInstanceId);
 
 	/**
-	 * 获取流程图
+	 * 根据流程实例Id获取流程实例
 	 * 
 	 * @param processInstanceId
 	 * @return
 	 */
-	public InputStream getDiagramByProcessInstanceId(String processInstanceId);
+	public ProcessInstance getProcessInstanceById(String processInstanceId);
+
+	/**
+	 * 跟踪流程图
+	 * 
+	 * @param processInstanceId
+	 * @return
+	 */
+	public InputStream traceProcessDiagram(String processInstanceId);
 }

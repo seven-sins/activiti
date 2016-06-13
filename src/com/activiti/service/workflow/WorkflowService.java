@@ -24,7 +24,7 @@ public interface WorkflowService {
 	 * @param processName
 	 * @param in
 	 */
-	public void save(String processName, InputStream in);
+	public void deploy(String processName, InputStream in);
 
 	/**
 	 * 查询部署对象信息
@@ -72,10 +72,10 @@ public interface WorkflowService {
 	/**
 	 * 获取任务
 	 * 
-	 * @param name
+	 * @param userId
 	 * @return
 	 */
-	public List<Task> findTaskByName(String name);
+	public List<Task> findTaskByUserId(String userId);
 
 	/**
 	 * 根据任务id获取BUSINESSKEY

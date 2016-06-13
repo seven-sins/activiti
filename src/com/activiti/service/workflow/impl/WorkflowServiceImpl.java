@@ -57,10 +57,9 @@ public class WorkflowServiceImpl implements WorkflowService {
 	@Autowired
 	ProcessEngineConfiguration processEngineConfiguration;
 
-	public void save(String processName, InputStream in) {
+	public void deploy(String processName, InputStream in) {
 		ZipInputStream zipInputStream = new ZipInputStream(in);
 		repositoryService //
-							// 与流程定义相关的service
 						.createDeployment() // 创建一个部署对象
 						.name(processName) //
 						.addZipInputStream(zipInputStream)//
@@ -89,7 +88,7 @@ public class WorkflowServiceImpl implements WorkflowService {
 
 	public void deleteProcessDefinitionByDeploymentId(Serializable id) {
 		repositoryService//
-						.deleteDeployment(id.toString(), true);
+						.deleteDeployment(id.toString(), true); // true 级联删除
 	}
 
 	public ProcessInstance startProcess(String processInstanceKey, Map map) {
@@ -102,10 +101,10 @@ public class WorkflowServiceImpl implements WorkflowService {
 						.startProcessInstanceByKey(processInstanceKey, businessKey, map);
 	}
 
-	public List<Task> findTaskByName(String name) {
+	public List<Task> findTaskByUserId(String userId) {
 		return taskService//
 						.createTaskQuery()//
-						.taskAssignee(name)//
+						.taskAssignee(userId)//
 						.orderByTaskCreateTime().desc()//
 						.list();
 	}
@@ -118,15 +117,9 @@ public class WorkflowServiceImpl implements WorkflowService {
 						.singleResult();
 		// 2：使用任务对象Task获取流程实例ID
 		String processInstanceId = task.getProcessInstanceId();
-		// 3：使用流程实例ID，查询正在执行的执行对象表，返回流程实例对象
-		ProcessInstance pi = runtimeService//
-						.createProcessInstanceQuery()//
-						.processInstanceId(processInstanceId)// 使用流程实例ID查询
-						.singleResult();
-		// 4：使用流程实例对象获取BUSINESS_KEY
-		String buniness_key = pi.getBusinessKey();
+		ProcessInstance processInstance = getProcessInstanceById(processInstanceId);
 
-		return buniness_key;
+		return processInstance.getBusinessKey();
 	}
 
 	public List<String> findOutComeByTaskId(String taskId) {

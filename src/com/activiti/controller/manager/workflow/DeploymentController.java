@@ -49,9 +49,8 @@ public class DeploymentController extends BaseController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/workflow/deployment", method = RequestMethod.POST)
-	public String save(String processName, MultipartFile processFile)
-			throws IOException {
-		workflowService.save(processName, processFile.getInputStream());
+	public String save(String processName, MultipartFile processFile) throws IOException {
+		workflowService.deploy(processName, processFile.getInputStream());
 
 		return "redirect:/workflow/deploy?status=success";
 	}

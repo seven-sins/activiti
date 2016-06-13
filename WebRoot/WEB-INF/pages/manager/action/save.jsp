@@ -41,7 +41,7 @@
     </div>
 	<p class="short-input ue-clear">
     	<label>Action名称：</label>
-        <input type="text" name="name" value="${action != null ? action.name : '' }" placeholder="Action名称"  />
+        <input type="text" name="name" data-require="true"  value="${action != null ? action.name : '' }" placeholder="Action名称"  />
         <span><em>*</em></span>
     </p>
     <p class="short-input ue-clear">
@@ -79,6 +79,10 @@ $(".select-list li").on("click",function(){
 });
 // 保存
 function save(obj, redirectUrl){
+	if(!validate()){
+		return false;
+	}
+	
 	var url = $(obj).attr("url");
 	var regex = /\d+$/;
 	var type = "POST";

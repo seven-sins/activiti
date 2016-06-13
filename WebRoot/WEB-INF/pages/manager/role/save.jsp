@@ -25,7 +25,7 @@
 <form id="form1" autocomplete="off">
 	<p class="short-input ue-clear">
     	<label>角色名称：</label>
-        <input type="text" name="name" value="${role != null ? role.name : '' }" placeholder="角色名称"  />
+        <input type="text" name="name" data-require="true" value="${role != null ? role.name : '' }" placeholder="角色名称"  />
         <span><em>*</em></span>
     </p>
 </form> 
@@ -39,6 +39,10 @@
 <script type="text/javascript">
 // 保存
 function save(obj, redirectUrl){
+	if(!validate()){
+		return false;
+	}
+	
 	var url = $(obj).attr("url");
 	var regex = /\d+$/;
 	var type = "POST";
@@ -46,10 +50,6 @@ function save(obj, redirectUrl){
 		type = "PUT";
 	}
 	var data = $("#form1").serialize();
-	if($.isNull(data.name)){
-		$.msg({msg: "角色名称不能为空！", second: 0});
-		return false;
-	}
 	
 	$.ajax({
 		url: url,

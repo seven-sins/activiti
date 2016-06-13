@@ -18,14 +18,14 @@
 <form id="form1" action="${ctx }/workflow/deployment" autocomplete="off" method="POST" enctype="multipart/form-data" >
 	<p class="short-input ue-clear">
     	<label>流程名称：</label>
-        <input type="text" name="processName" placeholder="上传流程定义"  />
+        <input type="text" name="processName" data-require="true" placeholder="上传流程定义"  />
         <span><em>*</em></span>
     </p>
     <p class="short-input ue-clear">
     	<label>流程定义：</label>
     	<!-- 隐藏的控件主图 -->
         <input type="file" name="processFile" id="processFile" class="hide" onchange="openFile()" />
-        <input type="text" name="processFile_" readonly="readonly" onclick="clickFile()" placeholder="请输入流程名称"  />
+        <input type="text" name="processFile_" data-require="true" readonly="readonly" onclick="clickFile()" placeholder="请输入流程名称"  />
         <span><em>*</em></span>
     </p>
 </form> 
@@ -53,11 +53,11 @@ function clickFile(){
 }
 
 function save(){
-	var data = $("#form1").serialize();
-	if($.isNull(data.processName)){
-		$.msg({msg: "流程名称不能为空！", second: 0, fontSize: "16px"});
+	if(!validate()){
 		return false;
 	}
+	
+	var data = $("#form1").serialize();
 	var isEmpty = false;
 	$("input[type='file']").each(function(){
 		if($.isNull(this.value)){

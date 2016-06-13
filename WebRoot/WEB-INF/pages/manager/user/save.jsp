@@ -41,7 +41,7 @@
     </div>
 	<p class="short-input ue-clear">
     	<label>用户名：</label>
-        <input type="text" name="userName" value="${user != null ? user.userName : '' }" placeholder="用户名"  />
+        <input type="text" name="userName" data-require="true" value="${user != null ? user.userName : '' }" placeholder="用户名"  />
         <span><em>*</em></span>
     </p>
     <p class="short-input ue-clear">
@@ -57,7 +57,7 @@
     </p>
     <p class="short-input ue-clear">
     	<label>姓名：</label>
-        <input type="text" name="name" value="${user != null ? user.name : '' }" placeholder="姓名" />
+        <input type="text" name="name" data-require="true" value="${user != null ? user.name : '' }" placeholder="姓名" />
         <span><em>*</em></span>
     </p>
 </form> 
@@ -82,6 +82,10 @@ $(".select-list li").on("click",function(){
 
 // 保存
 function save(obj, redirectUrl){
+	if(!validate()){
+		return false;
+	}
+	
 	var url = $(obj).attr("url");
 	var regex = /\d+$/;
 	var type = "POST";

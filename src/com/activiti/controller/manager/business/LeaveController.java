@@ -107,7 +107,7 @@ public class LeaveController extends BaseController {
 	@RequestMapping(value = "/business/leave/{id:\\d+}/apply", method = RequestMethod.PUT)
 	@ResponseBody
 	public Object apply(@PathVariable("id") Integer id) {
-		ProcessInstance processInstance = workflowService.startProcess("leaveBill", "leave:" + id,//
+		ProcessInstance processInstance = workflowService.startProcess("leaveBill", id + "",//
 						params.put("proposer", "张郃")//
 										.put("departmentManager", "司马懿")//
 										.put("generalManager", "曹操")//

@@ -57,6 +57,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 	@Autowired
 	ProcessEngineConfiguration processEngineConfiguration;
 
+	/**
+	 * 部署流程
+	 * 
+	 * @param processName
+	 * @param in
+	 */
 	public void deploy(String processName, InputStream in) {
 		ZipInputStream zipInputStream = new ZipInputStream(in);
 		repositoryService //
@@ -66,6 +72,11 @@ public class WorkflowServiceImpl implements WorkflowService {
 						.deploy(); // 完成部署
 	}
 
+	/**
+	 * 查询部署对象信息
+	 * 
+	 * @return
+	 */
 	public List<Deployment> findDeployment() {
 		return repositoryService//
 						.createDeploymentQuery()//
@@ -73,6 +84,11 @@ public class WorkflowServiceImpl implements WorkflowService {
 						.list();
 	}
 
+	/**
+	 * 查询流程定义
+	 * 
+	 * @return
+	 */
 	public List<ProcessDefinition> findProcessDefinition(String deploymentId) {
 		return repositoryService//
 						.createProcessDefinitionQuery()//
@@ -81,26 +97,61 @@ public class WorkflowServiceImpl implements WorkflowService {
 						.list();
 	}
 
+	/**
+	 * 获取图片的输入流
+	 * 
+	 * @param deplomentId
+	 *            部署对象id
+	 * @param diagramResourceName
+	 *            资源图片名称
+	 * @return
+	 */
 	public InputStream findImageInputStream(String deploymentId, String diagramResourceName) {
 		return repositoryService//
 						.getResourceAsStream(deploymentId, diagramResourceName);
 	}
 
+	/**
+	 * 使用部署对象id, 删除流程定义(级联删除)
+	 * 
+	 * @param id
+	 */
 	public void deleteProcessDefinitionByDeploymentId(Serializable id) {
 		repositoryService//
 						.deleteDeployment(id.toString(), true); // true 级联删除
 	}
 
+	/**
+	 * 启动流程实例
+	 * 
+	 * @param processInstanceKey
+	 * @param map
+	 * @return
+	 */
 	public ProcessInstance startProcess(String processInstanceKey, Map map) {
 		return runtimeService//
 						.startProcessInstanceByKey(processInstanceKey, map);
 	}
 
+	/**
+	 * 启动流程实例
+	 * 
+	 * @param processInstanceKey
+	 * @param businessKey
+	 * @param map
+	 * @return
+	 */
 	public ProcessInstance startProcess(String processInstanceKey, String businessKey, Map map) {
 		return runtimeService//
 						.startProcessInstanceByKey(processInstanceKey, businessKey, map);
 	}
 
+	/**
+	 * 获取任务
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	public List<Task> findTaskByUserId(String userId) {
 		return taskService//
 						.createTaskQuery()//
@@ -109,6 +160,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 						.list();
 	}
 
+	/**
+	 * 根据任务id获取BUSINESSKEY
+	 * 
+	 * @param taskId
+	 * @return
+	 */
 	public String findBusinessKeyByTaskId(String taskId) {
 		// 1：使用任务ID，查询任务对象Task
 		Task task = taskService//
@@ -122,6 +179,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 		return processInstance.getBusinessKey();
 	}
 
+	/**
+	 * 查询ProcessDefinitionEntiy对象，获取当前任务完成之后的连线名称
+	 * 
+	 * @param taskId
+	 * @return
+	 */
 	public List<String> findOutComeByTaskId(String taskId) {
 		// 返回存放连线的名称集合
 		List<String> list = new ArrayList<String>();
@@ -161,6 +224,9 @@ public class WorkflowServiceImpl implements WorkflowService {
 		return list;
 	}
 
+	/**
+	 * 指定连线名称完成任务
+	 */
 	public Object completeTask(Workflow workflow, User user) {
 		// 获取任务ID
 		String taskId = workflow.getTaskId();
@@ -215,6 +281,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 
 	}
 
+	/**
+	 * 根据任务Id查询批注信息
+	 * 
+	 * @param taskId
+	 * @return
+	 */
 	public List<Comment> findCommentByTaskId(String taskId) {
 		// 使用当前任务id，查询当前流程对应的历史任务id
 		Task task = taskService//
@@ -229,6 +301,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 						.getProcessInstanceComments(processInstanceId);
 	}
 
+	/**
+	 * 根据businessKey查询批注
+	 * 
+	 * @param businessKey
+	 * @return
+	 */
 	public List<Comment> findCommentByBusinessKey(String businessKey) {
 		HistoricProcessInstance historicProcessInstance = historyService//
 						.createHistoricProcessInstanceQuery()//
@@ -238,6 +316,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 		return processEngine.getTaskService().getProcessInstanceComments(historicProcessInstance.getId());
 	}
 
+	/**
+	 * 根据任务id获取流程定义对象
+	 * 
+	 * @param taskId
+	 * @return
+	 */
 	public ProcessDefinition findProcessDefinitionByTaskId(String taskId) {
 		Task task = taskService//
 						.createTaskQuery()//
@@ -250,6 +334,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 						.singleResult();
 	}
 
+	/**
+	 * 根据任务id获取当前活动坐标信息
+	 * 
+	 * @param taskId
+	 * @return
+	 */
 	public Coord findCoordByTaskId(String taskId) {
 		// 使用任务id，查询任务对象
 		Task task = processEngine.getTaskService()//
@@ -268,6 +358,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 		return coord;
 	}
 
+	/**
+	 * 根据流程实例Id获取当前任务节点信息
+	 * 
+	 * @param processInstanceId
+	 * @return
+	 */
 	public Task getCurrentTaskByProcessInstanceId(String processInstanceId) {
 		ProcessInstance processInstance = getProcessInstanceById(processInstanceId);
 		Task currentTask = null;
@@ -279,6 +375,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 		return currentTask;
 	}
 
+	/**
+	 * 跟踪流程图
+	 * 
+	 * @param processInstanceId
+	 * @return
+	 */
 	public InputStream traceProcessDiagram(String processInstanceId) {
 		Task task = getCurrentTaskByProcessInstanceId(processInstanceId);
 		ProcessInstance processInstance = getProcessInstanceById(processInstanceId);
@@ -302,6 +404,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 		return imageStream;
 	}
 
+	/**
+	 * 根据流程实例Id获取流程实例
+	 * 
+	 * @param processInstanceId
+	 * @return
+	 */
 	public ProcessInstance getProcessInstanceById(String processInstanceId) {
 		return runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
 	}

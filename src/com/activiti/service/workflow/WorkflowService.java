@@ -67,6 +67,14 @@ public interface WorkflowService {
 	 */
 	public ProcessInstance startProcess(String processInstanceKey, Map map);
 
+	/**
+	 * 启动流程实例
+	 * 
+	 * @param processInstanceKey
+	 * @param businessKey
+	 * @param map
+	 * @return
+	 */
 	public ProcessInstance startProcess(String processInstanceKey, String businessKey, Map map);
 
 	/**

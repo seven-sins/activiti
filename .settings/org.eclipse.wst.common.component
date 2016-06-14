@@ -3,6 +3,7 @@
         <wb-resource deploy-path="/" source-path="/WebRoot" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/config"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/resource"/>
         <property name="context-root" value="activiti"/>
         <property name="java-output-path" value="/activiti/WebRoot/WEB-INF/classes"/>
     </wb-module>

@@ -14,16 +14,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<select id="find" parameterType="map" resultMap="actionRM">
-		select * from action
+		select * from s_action
 		where 1=1 
 		<if test="parentId != null">and parentId = #{parentId}</if>
 		order by position asc
 	</select>
-	
 		
 	<select id="findByRoldId" parameterType="map" resultMap="actionRM">
-		SELECT DISTINCT a.id, a.url, a.request FROM privilege p 
-		INNER JOIN ACTION a 
+		SELECT DISTINCT a.id, a.url, a.request FROM s_privilege p 
+		INNER JOIN s_action a 
 		ON p.actionId=a.id 
 		WHERE 1 = 1
 		<if test="roleId != null">and p.roleId = #{roleId}</if>
@@ -31,12 +30,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="get" parameterType="int" resultMap="actionRM">
-		select * from action
+		select * from s_action
 		where id = #{id}
 	</select>
 	
 	<insert id="insert" parameterType="com.activiti.po.Action" >
-		insert into action
+		insert into s_action
 			(	
 				id,name,url,request,position,parentId
 			)
@@ -51,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	     )
 	</insert>
 	<update id="update" parameterType="com.activiti.po.Action" >
-		update action
+		update s_action
 		<set>
 			<if test="name != null">
 				name = #{name},
@@ -73,12 +72,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<delete id="deleteById" parameterType="int">
-		delete from action
+		delete from s_action
 		where id = #{id}
 	</delete>
 
 	<delete id="delete" parameterType="int">
-		delete from action
+		delete from s_action
 		where id in
 		<foreach collection="array" item="id" open="(" close=")" separator=",">
 			#{id}

@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<select id="find" parameterType="map" resultMap="roleRM">
-		select id, name from role 
+		select id, name from s_role 
 		where 1=1
 		<if test="name != null">
 			and name=#{name}
@@ -19,19 +19,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="get" parameterType="int" resultMap="roleRM">
-		select id, name from role 
+		select id, name from s_role 
 		where id = #{id}
 	</select>
 	
 	<insert id="insert" parameterType="com.activiti.po.Role" >
-		insert into role
+		insert into s_role
 			( name )
 		values
 			( #{name} )
 	</insert>
 	
 	<update id="update" parameterType="com.activiti.po.Role" >
-		update role
+		update s_role
 		<set>
 			<if test="name != null">
 				name = #{name}
@@ -41,12 +41,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<delete id="deleteById" parameterType="int">
-		delete from role
+		delete from s_role
 		where id = #{id}
 	</delete>
     
 	<delete id="delete" parameterType="int">
-		delete from role
+		delete from s_role
 		where id in
 		<foreach collection="array" item="id" open="(" close=")" separator=",">
 			#{id}

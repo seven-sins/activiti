@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<select id="find" parameterType="map" resultMap="categoryRM">
-		select id, name, description, position from category 
+		select id, name, description, position from s_category 
 		where 1=1
 		<if test="name != null">
 			and name=#{name}
@@ -21,19 +21,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="get" parameterType="int" resultMap="categoryRM">
-		select id, name, description, position from category 
+		select id, name, description, position from s_category 
 		where id = #{id}
 	</select>
 	
 	<insert id="insert" parameterType="com.activiti.po.Category" >
-		insert into category
+		insert into s_category
 			( name, description, position )
 		values
 			( #{name}, #{description}, #{position} )
 	</insert>
 	
 	<update id="update" parameterType="com.activiti.po.Category" >
-		update category
+		update s_category
 		<set>
 			<if test="name != null">
 				name = #{name},
@@ -49,12 +49,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<delete id="deleteById" parameterType="int">
-		delete from category
+		delete from s_category
 		where id = #{id}
 	</delete>
     
 	<delete id="delete" parameterType="int">
-		delete from category
+		delete from s_category
 		where id in
 		<foreach collection="array" item="id" open="(" close=")" separator=",">
 			#{id}

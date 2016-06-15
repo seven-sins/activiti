@@ -466,7 +466,7 @@
         	if(this.elements[0].innerWidth)
     			return this.elements[0].innerWidth;
     		else
-    			return this.elements[0].innerWidth;
+    			return this.elements[0].offsetWidth;
         },
         innerHeight: function () {
         	if(this.elements[0].innerHeight)

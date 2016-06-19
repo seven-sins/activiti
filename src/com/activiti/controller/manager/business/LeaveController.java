@@ -43,8 +43,9 @@ public class LeaveController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/business/leave", method = RequestMethod.GET)
-	public String index(Model model, Integer pageIndex, Integer pageSize) {
+	public String index(Model model, Integer pageIndex, Integer pageSize, @Session("me") User user) {
 		Map<String, Object> map = super.initPagination(pageIndex, pageSize);
+		map.put("userId", user.getId());
 		List<Leave> dataList = leaveService.find(map);
 		PageInfo pageInfo = new PageInfo(dataList);
 		Page page = new Page(pageInfo.getPageNum(), pageInfo.getPageSize(), dataList, (int) pageInfo.getTotal());
@@ -108,11 +109,11 @@ public class LeaveController extends BaseController {
 	@ResponseBody
 	public Object apply(@PathVariable("id") Integer id, @Session("me") User user) {
 		ProcessInstance processInstance = workflowService.startProcess("leave",//
-						id + "",//
-						params.put("applyUser", user.getName())//
-										.put("departManager", "司马懿")//
-										.put("hr", "曹操")//
-										.getMap());
+				id + "",//
+				params.put("applyUser", user.getName())//
+						.put("departManager", "司马懿")//
+						.put("hr", "曹操")//
+						.getMap());
 		if (processInstance == null) {
 			return result(400, "开启流程实例出错！");
 		}

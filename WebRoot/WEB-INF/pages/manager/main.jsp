@@ -47,6 +47,7 @@
                    		<ul class="subnav">
                    			<li><a href="${ctx }/workflow/deploy" target="iframe">部署流程</a></li>
                         	<li><a href="${ctx }/workflow/deployment" target="iframe">部署信息</a></li>
+                        	<li><a href="${ctx }/workflow/task" target="iframe">我的任务</a></li>
                         </ul>
                    	</li>
                    	<li class="item gongwen">

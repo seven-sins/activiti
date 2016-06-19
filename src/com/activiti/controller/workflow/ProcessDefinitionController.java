@@ -1,4 +1,4 @@
-package com.activiti.controller.manager.workflow;
+package com.activiti.controller.workflow;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.activiti.po.workflow.Workflow;
 import com.activiti.service.workflow.WorkflowService;
+import com.activiti.vo.Workflow;
 
 @SuppressWarnings("all")
 @Controller
@@ -30,7 +30,7 @@ public class ProcessDefinitionController {
 		List<ProcessDefinition> dataList = workflowService.findProcessDefinition(deploymentId);
 		model.addAttribute("dataList", dataList);
 
-		return "/manager/workflow/processDefinition/list.jsp";
+		return "/workflow/processDefinition/list.jsp";
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class ProcessDefinitionController {
 	public String viewImg(Model model, Workflow workflow) {
 		model.addAttribute("workflow", workflow);
 
-		return "/manager/workflow/processDefinition/viewImg.jsp";
+		return "/workflow/processDefinition/viewImg.jsp";
 	}
 
 	/**

@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
   <process id="leave" name="leave" isExecutable="true">
+    <documentation>申请人：${applyUser}</documentation>
     <startEvent id="startevent" name="Start" activiti:initiator="${applyUser}"></startEvent>
-    <userTask id="departManager" name="部门经理审批" activiti:assignee="${departManager}"></userTask>
+    <userTask id="departManager" name="部门经理审批" activiti:assignee="${departManager}">
+      <documentation>申请人：${applyUser}</documentation>
+    </userTask>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow1" sourceRef="startevent" targetRef="departManager"></sequenceFlow>
     <sequenceFlow id="flow2" sourceRef="departManager" targetRef="exclusivegateway1"></sequenceFlow>
-    <userTask id="hr" name="人力资源审批" activiti:candidateGroups="${hr}"></userTask>
+    <userTask id="hr" name="人力资源审批" activiti:candidateGroups="${hr}">
+      <documentation>申请人：${applyUser}</documentation>
+    </userTask>
     <sequenceFlow id="flow3" name="批准" sourceRef="exclusivegateway1" targetRef="hr">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${departManagerPass}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="usertask2" name="修改申请" activiti:assignee="${applyUser}"></userTask>
+    <userTask id="usertask2" name="修改申请" activiti:assignee="${applyUser}">
+      <documentation>申请人：${applyUser}</documentation>
+    </userTask>
     <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow4" sourceRef="usertask2" targetRef="exclusivegateway2"></sequenceFlow>
     <sequenceFlow id="flow5" sourceRef="exclusivegateway2" targetRef="departManager"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway3" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow6" sourceRef="hr" targetRef="exclusivegateway3"></sequenceFlow>
-    <userTask id="usertask3" name="销假" activiti:assignee="${applyUser}"></userTask>
+    <userTask id="usertask3" name="销假" activiti:assignee="${applyUser}">
+      <documentation>申请人：${applyUser}</documentation>
+    </userTask>
     <sequenceFlow id="flow7" name="驳回" sourceRef="exclusivegateway3" targetRef="usertask2">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!hrPass}]]></conditionExpression>
     </sequenceFlow>
@@ -30,6 +39,7 @@
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!need}]]></conditionExpression>
     </sequenceFlow>
     <serviceTask id="mailtask1" name="邮件通知" activiti:type="mail">
+      <documentation>申请人：${applyUser}</documentation>
       <extensionElements>
         <activiti:field name="to">
           <activiti:expression>${to}</activiti:expression>

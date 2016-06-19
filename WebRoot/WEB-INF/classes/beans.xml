@@ -14,7 +14,7 @@
 			http://www.springframework.org/schema/tx 
 			http://www.springframework.org/schema/tx/spring-tx-4.0.xsd ">
 	<!-- 1.扫描service,dao -->
-	<context:component-scan base-package="com.activiti.service,com.activiti.dao"/>
+	<context:component-scan base-package="com.activiti.service,com.activiti.dao,com.activiti.workflow"/>
 	<!-- 2.加载配置数据库文件 -->
 	<context:property-placeholder location="classpath:jdbc.properties"/>
 		

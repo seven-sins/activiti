@@ -1,4 +1,4 @@
-package com.activiti.controller.manager.workflow;
+package com.activiti.controller.workflow;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,7 +28,7 @@ public class DeploymentController extends BaseController {
 		List<Deployment> dataList = workflowService.findDeployment();
 		model.addAttribute("dataList", dataList);
 
-		return "/manager/workflow/deployment/list.jsp";
+		return "/workflow/deployment/list.jsp";
 	}
 
 	@RequestMapping(value = "/workflow/deploy", method = RequestMethod.GET)
@@ -37,7 +37,7 @@ public class DeploymentController extends BaseController {
 			model.addAttribute("status", status);
 		}
 
-		return "/manager/workflow/deployment/deploy.jsp";
+		return "/workflow/deployment/deploy.jsp";
 	}
 
 	/**

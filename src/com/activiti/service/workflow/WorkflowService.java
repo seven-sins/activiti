@@ -12,8 +12,8 @@ import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 
 import com.activiti.po.User;
-import com.activiti.po.workflow.Coord;
-import com.activiti.po.workflow.Workflow;
+import com.activiti.vo.Coord;
+import com.activiti.vo.Workflow;
 
 @SuppressWarnings("all")
 public interface WorkflowService {
@@ -84,6 +84,15 @@ public interface WorkflowService {
 	 * @return
 	 */
 	public List<Task> findTaskByUserId(String userId);
+
+	/**
+	 * 获取任务
+	 * 
+	 * @param userId
+	 * @param processDefinitionKey
+	 * @return
+	 */
+	public List<Task> findTask(String userId, String processDefinitionKey);
 
 	/**
 	 * 根据任务id获取BUSINESSKEY
@@ -161,4 +170,21 @@ public interface WorkflowService {
 	 * @return
 	 */
 	public InputStream traceProcessDiagram(String processInstanceId);
+
+	/**
+	 * 获取流程变量
+	 * 
+	 * @param taskId
+	 * @param variableName
+	 * @return
+	 */
+	public Object getVariableByTaskId(String taskId, String variableName);
+
+	/**
+	 * 签收任务
+	 * 
+	 * @param taskId
+	 * @param userId
+	 */
+	public void claim(String taskId, String userId);
 }

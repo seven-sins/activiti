@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 弃用 -->
+<mapper namespace="com.activiti.mapper.workflow.TodoDefineMapper" >
+	<resultMap type="com.activiti.vo.TodoDefine" id="todoDefineRM">
+		<id property="id" column="id" />
+		<result property="business" column="business" />
+		<result property="tableName" column="tableName" />
+		<result property="column1" column="column1" />
+		<result property="column2" column="column2" />
+	</resultMap>
+
+	<select id="find" parameterType="map" resultMap="todoDefineRM">
+		SELECT
+			id,
+			business,
+			tableName,
+			column1,
+			column2
+		FROM
+			w_tododefine
+		WHERE
+			1 = 1
+		<if test="business != null">
+			and business=#{business}
+		</if>
+		order by id desc
+	</select>
+	
+	<select id="get" parameterType="int" resultMap="todoDefineRM">
+		SELECT
+			id,
+			business,
+			tableName,
+			column1,
+			column2
+		FROM
+			w_tododefine
+		WHERE
+			id = #{id}
+	</select>
+	
+	<insert id="insert" parameterType="com.activiti.vo.TodoDefine" >
+		INSERT INTO w_tododefine(
+			business,
+			tableName,
+			column1,
+			column2
+		)
+		VALUES (
+			 #{business},
+		 	 #{tableName},
+		 	 #{column1},
+		 	 #{column2}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.activiti.vo.TodoDefine" >
+		update w_tododefine
+		<set>
+			<if test="business != null">
+				business = #{business},
+			</if>
+			<if test="tableName != null">
+				tableName = #{tableName},
+			</if>
+			<if test="column1 != null">
+				column1 = #{column1},
+			</if>
+			<if test="column2 != null">
+				column2 = #{column2}
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="int">
+		delete from w_tododefine
+		where id = #{id}
+	</delete>
+    
+	<delete id="delete" parameterType="int">
+		delete from w_tododefine
+		where id in
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+</mapper>

@@ -273,25 +273,18 @@ public class WorkflowServiceImpl implements WorkflowService {
 		 * 1：在完成之前，添加一个批注信息，向act_hi_comment表中添加数据，用于记录对当前申请人的一些审核信息
 		 */
 		// 使用任务ID，查询任务对象，获取流程流程实例ID
-		Task task = taskService//
-				.createTaskQuery()//
-				.taskId(taskId)// 使用任务ID查询
+		Task task = taskService.createTaskQuery()//
+				.taskId(taskId) // 使用任务ID查询
 				.singleResult();
 		// 获取流程实例ID
 		String processInstanceId = task.getProcessInstanceId();
-		/**
-		 * 注意：添加批注的时候，由于Activiti底层代码是使用： String userId =
-		 * Authentication.getAuthenticatedUserId(); CommentEntity comment = new
-		 * CommentEntity(); comment.setUserId(userId);
-		 * 所有需要从Session中获取当前登录人，作为该任务的办理人
-		 * （审核人），对应act_hi_comment表中的User_ID的字段，不过不添加审核人，该字段为null
-		 * 所以要求，添加配置执行使用Authentication.setAuthenticatedUserId();添加当前任务的审核人
-		 * */
+
+		// 2：使用Authentication.setAuthenticatedUserId();添加当前任务的审核人
 		Authentication.setAuthenticatedUserId(user.getName());
-		taskService//
-				.addComment(taskId, processInstanceId, message);
+
+		taskService.addComment(taskId, processInstanceId, message);
 		/**
-		 * 2：如果连线的名称是“默认提交”，那么就不需要设置，如果不是，就需要设置流程变量 在完成任务之前，设置流程变量，按照连线的名称，去完成任务
+		 * 如果连线的名称是“提交”，那么就不需要设置，如果不是，就需要设置流程变量 在完成任务之前，设置流程变量，按照连线的名称，去完成任务
 		 * 流程变量的名称：outcome 流程变量的值：连线的名称
 		 */
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -303,16 +296,13 @@ public class WorkflowServiceImpl implements WorkflowService {
 		taskService.complete(taskId, map);
 		// 4：当任务完成之后，需要指定下一个任务的办理人（使用类）-----已经开发完成
 
-		/**
-		 * 5：在完成任务之后，判断流程是否结束 如果流程结束了，更新请假单表的状态从1变成2（审核中-->审核完成）
-		 */
+		// 5：在完成任务之后，判断流程是否结束
 		ProcessInstance pi = runtimeService//
 				.createProcessInstanceQuery()//
 				.processInstanceId(processInstanceId)// 使用流程实例ID查询
 				.singleResult();
 
 		return pi; // pi==null 任务结束
-
 	}
 
 	/**
